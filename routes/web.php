@@ -15,7 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', [MainController::class, 'home'])->name('home.page');
-
+Route::get('/about', [MainController::class, 'about'])->name('about.page');
+Route::get('/contact', [MainController::class, 'contact'])->name('contact.page');
+Route::get('/dermatologists', [MainController::class, 'dermatologists'])->name('dermatologists.page');
+Route::get('/booking', [MainController::class, 'booking'])->name('booking.page');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
