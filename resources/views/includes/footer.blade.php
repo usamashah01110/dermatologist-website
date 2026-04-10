@@ -3,7 +3,7 @@
     <div class="row g-5">
 
       <div class="col-lg-4">
-        <div class="footer-brand">Derma<span>Care</span></div>
+        <div class="footer-brand">Derma<span>Connect</span></div>
         <p class="footer-desc">Pakistan's most trusted platform for connecting patients with certified dermatologists. Quality skin care, accessible to everyone.</p>
         <div class="footer-social mt-4">
           <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -48,7 +48,7 @@
         </div>
         <div class="footer-contact-item">
           <i class="fas fa-envelope"></i>
-          <span>support@dermacare.pk</span>
+          <span>support@dermaconnect.pk</span>
         </div>
         <div class="footer-contact-item">
           <i class="fas fa-clock"></i>
@@ -61,7 +61,7 @@
     <div class="footer-bottom">
       <div class="row align-items-center">
         <div class="col-md-6">
-          <p>© 2026 DermaCare. All rights reserved.</p>
+          <p>© 2026 DermaConnect. All rights reserved.</p>
         </div>
         <div class="col-md-6 text-md-end mt-2 mt-md-0">
           <a href="#" style="color:rgba(255,255,255,.35);font-size:.82rem;text-decoration:none;margin-right:20px;">Privacy Policy</a>

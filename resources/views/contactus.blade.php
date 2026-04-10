@@ -10,7 +10,7 @@
           We’re here to help you with every skin concern
         </div>
         <h1>
-          Reach out to DermaCare
+          Reach out to DermaConnect
           <em>for faster support and expert guidance.</em>
         </h1>
         <p>Have a question about booking, your treatment plan, or dermatologist availability? Our team is ready to respond quickly and help you get the care you need.</p>
@@ -56,7 +56,7 @@
             <i class="fas fa-envelope"></i>
             <div>
               <strong>Email support</strong>
-              <p>support@dermacare.pk</p>
+              <p>support@dermaconnect.pk</p>
             </div>
           </div>
 

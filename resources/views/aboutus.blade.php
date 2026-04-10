@@ -13,7 +13,7 @@
           Our mission is to help every patient
           <em>feel confident in their skin.</em>
         </h1>
-        <p>DermaCare brings together certified dermatologists, personalized treatment guidance, and modern telemedicine—all with the warmth of real healthcare support.</p>
+        <p>DermaConnect brings together certified dermatologists, personalized treatment guidance, and modern telemedicine—all with the warmth of real healthcare support.</p>
         <div class="d-flex flex-wrap justify-content-center gap-3">
           <a href="#care-approach" class="btn-hero-primary">
             <i class="fas fa-hand-holding-medical"></i> Learn More
@@ -47,7 +47,7 @@
   <div class="container">
     <div class="row align-items-center gy-5">
       <div class="col-lg-6">
-        <span class="section-label">About DermaCare</span>
+        <span class="section-label">About DermaConnect</span>
         <h2 class="section-title">A modern dermatology experience with a personal touch.</h2>
         <p class="section-subtitle">Since our founding, we've been focused on making dermatology accessible across Pakistan. We combine verified specialists, evidence-based care, and caring follow-up so patients can trust their skin journey.</p>
 
@@ -131,7 +131,7 @@
   <div class="container">
     <div class="text-center mb-5">
       <span class="section-label">Patient stories</span>
-      <h2 class="section-title">Patients love the DermaCare experience.</h2>
+      <h2 class="section-title">Patients love the DermaConnect experience.</h2>
       <p class="section-subtitle mx-auto">Real results, reliable support, and easy access to dermatologists across Pakistan.</p>
     </div>
     <div class="row g-4">
@@ -141,7 +141,7 @@
           <div class="review-stars">
             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
           </div>
-          <p class="review-text">DermaCare helped me finally manage my acne with a plan that actually fits my lifestyle. The doctor was supportive and responsive every step of the way.</p>
+          <p class="review-text">DermaConnect helped me finally manage my acne with a plan that actually fits my lifestyle. The doctor was supportive and responsive every step of the way.</p>
           <div class="d-flex align-items-center">
             <img src="https://i.pravatar.cc/100?img=13" alt="Hina" class="reviewer-avatar"/>
             <div>

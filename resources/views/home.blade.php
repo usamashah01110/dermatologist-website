@@ -53,7 +53,9 @@
 
       <div class="col-md-6 col-lg-3">
         <div class="disease-card">
-          <div class="disease-icon"><i class="fas fa-droplet"></i></div>
+          <div class="disease-icon-image">
+            <img src="{{ asset('images/acne.jpg') }}" alt="Acne & Pimples"/>
+          </div>
           <h5>Acne & Pimples</h5>
           <p>Comprehensive treatment plans for mild to severe acne, including hormonal and cystic types.</p>
           <span class="disease-tag">Very Common</span>
@@ -62,7 +64,9 @@
 
       <div class="col-md-6 col-lg-3">
         <div class="disease-card">
-          <div class="disease-icon"><i class="fas fa-sun"></i></div>
+          <div class="disease-icon-image">
+            <img src="https://images.unsplash.com/photo-1576091160550-112173f31c74?w=200&h=200&fit=crop" alt="Psoriasis"/>
+          </div>
           <h5>Psoriasis</h5>
           <p>Advanced therapies to manage chronic plaque psoriasis and reduce flare-ups effectively.</p>
           <span class="disease-tag">Chronic</span>
@@ -71,7 +75,9 @@
 
       <div class="col-md-6 col-lg-3">
         <div class="disease-card">
-          <div class="disease-icon"><i class="fas fa-wind"></i></div>
+          <div class="disease-icon-image">
+            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=200&h=200&fit=crop" alt="Eczema"/>
+          </div>
           <h5>Eczema</h5>
           <p>Personalised care for atopic dermatitis to soothe inflammation and restore skin barrier health.</p>
           <span class="disease-tag">Inflammatory</span>
@@ -80,7 +86,9 @@
 
       <div class="col-md-6 col-lg-3">
         <div class="disease-card">
-          <div class="disease-icon"><i class="fas fa-circle-dot"></i></div>
+          <div class="disease-icon-image">
+            <img src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=200&h=200&fit=crop" alt="Vitiligo"/>
+          </div>
           <h5>Vitiligo</h5>
           <p>Targeted repigmentation therapies and management strategies for vitiligo patches.</p>
           <span class="disease-tag">Autoimmune</span>
@@ -89,7 +97,9 @@
 
       <div class="col-md-6 col-lg-3">
         <div class="disease-card">
-          <div class="disease-icon"><i class="fas fa-splotch"></i></div>
+          <div class="disease-icon-image">
+            <img src="https://images.unsplash.com/photo-1584308666744-24d5f400f6f5?w=200&h=200&fit=crop" alt="Rosacea"/>
+          </div>
           <h5>Rosacea</h5>
           <p>Trigger identification and prescription treatments to control facial redness and flushing.</p>
           <span class="disease-tag">Facial</span>
@@ -98,7 +108,9 @@
 
       <div class="col-md-6 col-lg-3">
         <div class="disease-card">
-          <div class="disease-icon"><i class="fas fa-microscope"></i></div>
+          <div class="disease-icon-image">
+            <img src="https://images.unsplash.com/photo-1576091160550-112173f31c74?w=200&h=200&fit=crop" alt="Skin Cancer"/>
+          </div>
           <h5>Skin Cancer</h5>
           <p>Early detection screenings and expert management of melanoma and non-melanoma skin cancers.</p>
           <span class="disease-tag">Critical</span>
@@ -107,7 +119,9 @@
 
       <div class="col-md-6 col-lg-3">
         <div class="disease-card">
-          <div class="disease-icon"><i class="fas fa-person-rays"></i></div>
+          <div class="disease-icon-image">
+            <img src="https://images.unsplash.com/photo-1579208557569-bc2e40e1b61b?w=200&h=200&fit=crop" alt="Fungal Infections"/>
+          </div>
           <h5>Fungal Infections</h5>
           <p>Effective antifungal therapies for ringworm, athlete's foot, nail fungus, and more.</p>
           <span class="disease-tag">Infectious</span>
@@ -116,7 +130,9 @@
 
       <div class="col-md-6 col-lg-3">
         <div class="disease-card">
-          <div class="disease-icon"><i class="fas fa-hand-dots"></i></div>
+          <div class="disease-icon-image">
+            <img src="https://images.unsplash.com/photo-1576091160550-112173f31c74?w=200&h=200&fit=crop" alt="Warts & Moles"/>
+          </div>
           <h5>Warts & Moles</h5>
           <p>Safe removal and monitoring of warts, skin tags, and moles with minimal scarring.</p>
           <span class="disease-tag">Benign</span>
@@ -138,7 +154,7 @@
             <div class="icon"><i class="fas fa-user-md"></i></div>
             <div class="text">
               <strong>Join 200+ Specialists</strong>
-              <span>Already on DermaCare</span>
+              <span>Already on DermaConnect</span>
             </div>
           </div>
         </div>
@@ -189,7 +205,7 @@
     <div class="text-center mb-5">
       <span class="section-label">Patient Stories</span>
       <h2 class="section-title">What Our Patients Say</h2>
-      <p class="section-subtitle mx-auto">Real experiences from real patients who found the right care on DermaCare.</p>
+      <p class="section-subtitle mx-auto">Real experiences from real patients who found the right care on DermaConnect.</p>
     </div>
 
     <div class="row g-4">
@@ -200,7 +216,7 @@
           <div class="review-stars">
             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
           </div>
-          <p class="review-text">I struggled with severe cystic acne for years. Dr. Fatima created a custom plan that cleared my skin in just 3 months. I finally feel confident again. DermaCare changed my life!</p>
+          <p class="review-text">I struggled with severe cystic acne for years. Dr. Fatima created a custom plan that cleared my skin in just 3 months. I finally feel confident again. DermaConnect changed my life!</p>
           <div class="d-flex align-items-center">
             <img src="https://i.pravatar.cc/100?img=47" alt="Ayesha" class="reviewer-avatar"/>
             <div>
@@ -251,7 +267,7 @@
           <div class="review-stars">
             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
           </div>
-          <p class="review-text">I was nervous about online dermatology but DermaCare made it incredibly easy. The doctor diagnosed my vitiligo accurately and gave me a hopeful treatment roadmap.</p>
+          <p class="review-text">I was nervous about online dermatology but DermaConnect made it incredibly easy. The doctor diagnosed my vitiligo accurately and gave me a hopeful treatment roadmap.</p>
           <div class="d-flex align-items-center">
             <img src="https://i.pravatar.cc/100?img=54" alt="Bilal" class="reviewer-avatar"/>
             <div>
