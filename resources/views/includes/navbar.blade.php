@@ -14,17 +14,17 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {{ request()->routeIs('about.page') ? 'active' : '' }}" href="{{ route('about.page') }}">
+          <a class="nav-link " href="#">
             <i class="fas fa-info-circle me-1"></i>About Us
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {{ request()->routeIs('contact.page') ? 'active' : '' }}" href="{{ route('contact.page') }}">
+          <a class="nav-link " href="#">
             <i class="fas fa-envelope me-1"></i>Contact Us
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {{ request()->routeIs('dermatologists.page') ? 'active' : '' }}" href="{{ route('dermatologists.page') }}">
+          <a class="nav-link " href="#">
             <i class="fas fa-user-md me-1"></i>Dermatologists
           </a>
         </li>

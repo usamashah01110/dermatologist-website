@@ -65,7 +65,7 @@
       <div class="col-md-6 col-lg-3">
         <div class="disease-card">
           <div class="disease-icon-image">
-            <img src="https://images.unsplash.com/photo-1576091160550-112173f31c74?w=200&h=200&fit=crop" alt="Psoriasis"/>
+            <img src="{{ asset('images/psoriasis.jpg') }}" alt="Psoriasis"/>
           </div>
           <h5>Psoriasis</h5>
           <p>Advanced therapies to manage chronic plaque psoriasis and reduce flare-ups effectively.</p>
@@ -76,7 +76,7 @@
       <div class="col-md-6 col-lg-3">
         <div class="disease-card">
           <div class="disease-icon-image">
-            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=200&h=200&fit=crop" alt="Eczema"/>
+            <img src="{{ asset('images/acne.jpg') }}" alt="Eczema"/>
           </div>
           <h5>Eczema</h5>
           <p>Personalised care for atopic dermatitis to soothe inflammation and restore skin barrier health.</p>
@@ -87,7 +87,7 @@
       <div class="col-md-6 col-lg-3">
         <div class="disease-card">
           <div class="disease-icon-image">
-            <img src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=200&h=200&fit=crop" alt="Vitiligo"/>
+            <img src="{{ asset('images/acne.jpg') }}" alt="Vitiligo"/>
           </div>
           <h5>Vitiligo</h5>
           <p>Targeted repigmentation therapies and management strategies for vitiligo patches.</p>
@@ -98,7 +98,7 @@
       <div class="col-md-6 col-lg-3">
         <div class="disease-card">
           <div class="disease-icon-image">
-            <img src="https://images.unsplash.com/photo-1584308666744-24d5f400f6f5?w=200&h=200&fit=crop" alt="Rosacea"/>
+            <img src="{{ asset('images/acne.jpg') }}" alt="Rosacea"/>
           </div>
           <h5>Rosacea</h5>
           <p>Trigger identification and prescription treatments to control facial redness and flushing.</p>
@@ -109,7 +109,7 @@
       <div class="col-md-6 col-lg-3">
         <div class="disease-card">
           <div class="disease-icon-image">
-            <img src="https://images.unsplash.com/photo-1576091160550-112173f31c74?w=200&h=200&fit=crop" alt="Skin Cancer"/>
+            <img src="{{ asset('images/acne.jpg') }}" alt="Skin Cancer"/>
           </div>
           <h5>Skin Cancer</h5>
           <p>Early detection screenings and expert management of melanoma and non-melanoma skin cancers.</p>
@@ -120,7 +120,7 @@
       <div class="col-md-6 col-lg-3">
         <div class="disease-card">
           <div class="disease-icon-image">
-            <img src="https://images.unsplash.com/photo-1579208557569-bc2e40e1b61b?w=200&h=200&fit=crop" alt="Fungal Infections"/>
+            <img src="{{ asset('images/acne.jpg') }}" alt="Fungal Infections"/>
           </div>
           <h5>Fungal Infections</h5>
           <p>Effective antifungal therapies for ringworm, athlete's foot, nail fungus, and more.</p>
@@ -131,7 +131,7 @@
       <div class="col-md-6 col-lg-3">
         <div class="disease-card">
           <div class="disease-icon-image">
-            <img src="https://images.unsplash.com/photo-1576091160550-112173f31c74?w=200&h=200&fit=crop" alt="Warts & Moles"/>
+            <img src="{{ asset('images/acne.jpg') }}" alt="Warts & Moles"/>
           </div>
           <h5>Warts & Moles</h5>
           <p>Safe removal and monitoring of warts, skin tags, and moles with minimal scarring.</p>
