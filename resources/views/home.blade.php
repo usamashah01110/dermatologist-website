@@ -50,95 +50,18 @@
       <p class="section-subtitle mx-auto">Our specialists are experienced in diagnosing and treating a wide range of dermatological conditions.</p>
     </div>
     <div class="row g-4">
-
+      @foreach($diseases as $disease)
       <div class="col-md-6 col-lg-3">
         <div class="disease-card">
           <div class="disease-icon-image">
-            <img src="{{ asset('images/acne.jpg') }}" alt="Acne & Pimples"/>
+            <img src="{{ $disease->image_path }}" alt="{{ $disease->name }}"/>
           </div>
-          <h5>Acne & Pimples</h5>
-          <p>Comprehensive treatment plans for mild to severe acne, including hormonal and cystic types.</p>
-          <span class="disease-tag">Very Common</span>
+          <h5>{{ $disease->name }}</h5>
+          <p>{{ $disease->description }}</p>
+          <span class="disease-tag">{{ $disease->tag }}</span>
         </div>
       </div>
-
-      <div class="col-md-6 col-lg-3">
-        <div class="disease-card">
-          <div class="disease-icon-image">
-            <img src="{{ asset('images/psoriasis.jpg') }}" alt="Psoriasis"/>
-          </div>
-          <h5>Psoriasis</h5>
-          <p>Advanced therapies to manage chronic plaque psoriasis and reduce flare-ups effectively.</p>
-          <span class="disease-tag">Chronic</span>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-3">
-        <div class="disease-card">
-          <div class="disease-icon-image">
-            <img src="{{ asset('images/acne.jpg') }}" alt="Eczema"/>
-          </div>
-          <h5>Eczema</h5>
-          <p>Personalised care for atopic dermatitis to soothe inflammation and restore skin barrier health.</p>
-          <span class="disease-tag">Inflammatory</span>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-3">
-        <div class="disease-card">
-          <div class="disease-icon-image">
-            <img src="{{ asset('images/acne.jpg') }}" alt="Vitiligo"/>
-          </div>
-          <h5>Vitiligo</h5>
-          <p>Targeted repigmentation therapies and management strategies for vitiligo patches.</p>
-          <span class="disease-tag">Autoimmune</span>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-3">
-        <div class="disease-card">
-          <div class="disease-icon-image">
-            <img src="{{ asset('images/acne.jpg') }}" alt="Rosacea"/>
-          </div>
-          <h5>Rosacea</h5>
-          <p>Trigger identification and prescription treatments to control facial redness and flushing.</p>
-          <span class="disease-tag">Facial</span>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-3">
-        <div class="disease-card">
-          <div class="disease-icon-image">
-            <img src="{{ asset('images/acne.jpg') }}" alt="Skin Cancer"/>
-          </div>
-          <h5>Skin Cancer</h5>
-          <p>Early detection screenings and expert management of melanoma and non-melanoma skin cancers.</p>
-          <span class="disease-tag">Critical</span>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-3">
-        <div class="disease-card">
-          <div class="disease-icon-image">
-            <img src="{{ asset('images/acne.jpg') }}" alt="Fungal Infections"/>
-          </div>
-          <h5>Fungal Infections</h5>
-          <p>Effective antifungal therapies for ringworm, athlete's foot, nail fungus, and more.</p>
-          <span class="disease-tag">Infectious</span>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-3">
-        <div class="disease-card">
-          <div class="disease-icon-image">
-            <img src="{{ asset('images/acne.jpg') }}" alt="Warts & Moles"/>
-          </div>
-          <h5>Warts & Moles</h5>
-          <p>Safe removal and monitoring of warts, skin tags, and moles with minimal scarring.</p>
-          <span class="disease-tag">Benign</span>
-        </div>
-      </div>
-
+      @endforeach
     </div>
   </div>
 </section>

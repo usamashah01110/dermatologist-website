@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Disease;
 
 class MainController extends Controller
 {
     public function home() {
-        return view('home');
+        $diseases = Disease::all();
+        return view('home', compact('diseases'));
     }
 
     public function about() {
