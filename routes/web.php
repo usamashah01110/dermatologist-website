@@ -36,6 +36,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/disease/index', [DiseaseController::class, 'index'])->name('disease.index');
     Route::get('/disease/create', [DiseaseController::class, 'create'])->name('disease.create');
     Route::post('/disease/store', [DiseaseController::class, 'store'])->name('disease.store');
+    Route::get('/disease/edit/{id}', [DiseaseController::class, 'edit'])->name('disease.edit');
+    Route::post('/disease/update/{id}', [DiseaseController::class, 'update'])->name('disease.update');
+    Route::get('/disease/delete/{id}', [DiseaseController::class, 'delete'])->name('disease.delete');
 
 });
 
