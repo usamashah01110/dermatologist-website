@@ -41,7 +41,7 @@
     </div>
   </div>
 </section>
-
+                     <!-- Dynamic disease part -->
 <section class="diseases-section">
   <div class="container">
     <div class="text-center mb-5">
@@ -65,7 +65,7 @@
     </div>
   </div>
 </section>
-
+                     <!-- Dermatologist register part -->
 <section class="register-section">
   <div class="container">
     <div class="row align-items-center">
@@ -122,8 +122,9 @@
     </div>
   </div>
 </section>
-
+                                <!-- Review card -->
 <section class="reviews-section">
+
   <div class="container">
     <div class="text-center mb-5">
       <span class="section-label">Patient Stories</span>
@@ -132,109 +133,32 @@
     </div>
 
     <div class="row g-4">
-
+@foreach($reviews as $review)
       <div class="col-md-6 col-lg-4">
         <div class="review-card review-featured">
           <div class="review-quote">"</div>
           <div class="review-stars">
             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
           </div>
-          <p class="review-text">I struggled with severe cystic acne for years. Dr. Fatima created a custom plan that cleared my skin in just 3 months. I finally feel confident again. DermaConnect changed my life!</p>
-          <div class="d-flex align-items-center">
-            <img src="https://i.pravatar.cc/100?img=47" alt="Ayesha" class="reviewer-avatar"/>
+          <p class="review-text">{{ $review->review_text }}</p>
+          <div class="d-flex align-items-center gap-3">
+            <div class="reviewer-image">
+              @if($review->image_path)
+                <img src="{{ asset('storage/' . $review->image_path) }}" alt="Patient Image" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;" />
+              @else
+                <div class="bg-light rounded-circle shadow-sm" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
+                  <small class="text-muted">No Image</small>
+                </div>
+              @endif
+            </div>
             <div>
-              <div class="reviewer-name">Ayesha Malik</div>
-              <div class="reviewer-info">Lahore, Punjab</div>
+              <div class="reviewer-name">{{ $review->name }}</div>
+              <div class="reviewer-info">{{ $review->location }}</div>
             </div>
           </div>
         </div>
       </div>
-
-      <div class="col-md-6 col-lg-4">
-        <div class="review-card">
-          <div class="review-quote" style="color:var(--mid-blue)">"</div>
-          <div class="review-stars">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-          </div>
-          <p class="review-text">Booking was seamless and the doctor was incredibly thorough. My eczema flare-ups have significantly reduced. The online consultation saved me hours of commuting!</p>
-          <div class="d-flex align-items-center">
-            <img src="https://i.pravatar.cc/100?img=12" alt="Omar" class="reviewer-avatar"/>
-            <div>
-              <div class="reviewer-name">Omar Farooq</div>
-              <div class="reviewer-info">Karachi, Sindh</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-4">
-        <div class="review-card">
-          <div class="review-quote" style="color:var(--mid-blue)">"</div>
-          <div class="review-stars">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-          </div>
-          <p class="review-text">The psoriasis treatment plan from Dr. Ahmed was a game-changer. He explained everything clearly and followed up regularly. Highly recommended for anyone struggling with chronic skin conditions.</p>
-          <div class="d-flex align-items-center">
-            <img src="https://i.pravatar.cc/100?img=32" alt="Sara" class="reviewer-avatar"/>
-            <div>
-              <div class="reviewer-name">Sara Ahmed</div>
-              <div class="reviewer-info">Islamabad, ICT</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-4">
-        <div class="review-card">
-          <div class="review-quote" style="color:var(--mid-blue)">"</div>
-          <div class="review-stars">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-          </div>
-          <p class="review-text">I was nervous about online dermatology but DermaConnect made it incredibly easy. The doctor diagnosed my vitiligo accurately and gave me a hopeful treatment roadmap.</p>
-          <div class="d-flex align-items-center">
-            <img src="https://i.pravatar.cc/100?img=54" alt="Bilal" class="reviewer-avatar"/>
-            <div>
-              <div class="reviewer-name">Bilal Khan</div>
-              <div class="reviewer-info">Faisalabad, Punjab</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-4">
-        <div class="review-card">
-          <div class="review-quote" style="color:var(--mid-blue)">"</div>
-          <div class="review-stars">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-          </div>
-          <p class="review-text">Super fast appointment and a very knowledgeable dermatologist. The skin cancer screening was thorough and gave me complete peace of mind. Worth every rupee!</p>
-          <div class="d-flex align-items-center">
-            <img src="https://i.pravatar.cc/100?img=25" alt="Nadia" class="reviewer-avatar"/>
-            <div>
-              <div class="reviewer-name">Nadia Hussain</div>
-              <div class="reviewer-info">Multan, Punjab</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-4">
-        <div class="review-card">
-          <div class="review-quote" style="color:var(--mid-blue)">"</div>
-          <div class="review-stars">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-          </div>
-          <p class="review-text">As a busy professional, I love how easy it is to consult a top dermatologist without taking time off work. The platform is clean, fast, and the doctors are exceptional.</p>
-          <div class="d-flex align-items-center">
-            <img src="https://i.pravatar.cc/100?img=68" alt="Hamza" class="reviewer-avatar"/>
-            <div>
-              <div class="reviewer-name">Hamza Raza</div>
-              <div class="reviewer-info">Lahore, Punjab</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+@endforeach
     </div>
   </div>
 </section>

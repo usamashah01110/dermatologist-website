@@ -22,15 +22,19 @@
                 <div class="text-truncate" data-i18n="Dashboards">Dashboards</div>
             </a>
         </li>
-
+        <!-- disease button -->
         <li class="menu-item ">
             <a href="{{ route('disease.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-smile"></i>
                 Disease
             </a>
         </li>
-
-
-
+        <!-- Review Cards -->
+          <li class="menu-item ">
+            <a href="{{ route('review.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                Review Cards
+            </a>
+        </li>
     </ul>
 </aside>

@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DiseaseController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ReviewController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,7 +36,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/disease/index', [DiseaseController::class, 'index'])->name('disease.index');
     Route::get('/disease/create', [DiseaseController::class, 'create'])->name('disease.create');
     Route::post('/disease/store', [DiseaseController::class, 'store'])->name('disease.store');
-
+    //REVIEW ROUTES
+    Route::get('/review/index', [ReviewController::class, 'index'])->name('review.index');
+    Route::get('/review/create', [ReviewController::class, 'create'])->name('review.create');
+    Route::post('/review/store', [ReviewController::class, 'store'])->name('review.store');
+    Route::delete('/review/destroy/{id}', [ReviewController::class, 'destroy'])->name('review.destroy');
+    Route::get('/review/edit/{id}', [ReviewController::class, 'edit'])->name('review.edit');
+    Route::put('/review/update/{id}', [ReviewController::class, 'update'])->name('review.update');
 });
 
 require __DIR__.'/auth.php';
