@@ -8,7 +8,7 @@ use App\Models\Disease;
 class DiseaseController extends Controller
 {
     public function index(){
-        $diseases = Disease::paginate(10);
+        $diseases = Disease::all();
         return view('admin.disease.index', compact('diseases'));
     }
 
@@ -39,11 +39,13 @@ class DiseaseController extends Controller
         return view('admin.disease.create');
     }
 
-    public function edit(Disease $disease){
+    public function edit($id){
+        $disease = Disease::find($id);
         return view('admin.disease.edit', compact('disease'));
     }
 
-    public function update(Request $request, Disease $disease){
+    public function update(Request $request, $id){
+        $disease = Disease::find($id);
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
@@ -66,9 +68,9 @@ class DiseaseController extends Controller
         return redirect()->route('disease.index')->with('success', 'Disease updated successfully.');
     }
 
-    public function destroy(Disease $disease){
+    public function delete($id){
+        $disease = Disease::find($id);
         $disease->delete();
-
-        return redirect()->route('disease.index')->with('success', 'Disease deleted successfully.');
+        return redirect()->back();
     }
 }

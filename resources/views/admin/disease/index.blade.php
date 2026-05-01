@@ -34,14 +34,10 @@
                               <i class="icon-base bx bx-dots-vertical-rounded"></i>
                             </button>
                             <div class="dropdown-menu">
-                              <a class="dropdown-item" href=""
+                              <a class="dropdown-item" href="{{ route('disease.edit', $disease->id ) }}"
                                 ><i class="icon-base bx bx-edit-alt me-1"></i> Edit</a
                               >
-                              <form action="" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="dropdown-item" onclick="return confirm('Are you sure?')"><i class="icon-base bx bx-trash me-1"></i> Delete</button>
-                              </form>
+                              <a href="{{ route('disease.delete', $disease->id ) }}" type="submit" class="dropdown-item" onclick="return confirm('Are you sure?')"><i class="icon-base bx bx-trash me-1"></i> Delete</a>
                             </div>
                           </div>
                         </td>
@@ -56,7 +52,7 @@
                   </table>
                 </div>
                 <div class="card-footer">
-                  {{ $diseases->links() }}
+                 
                 </div>
               </div>
 </div>

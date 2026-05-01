@@ -30,19 +30,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-
-    // Disease Routes
+     // Disease Routes
     Route::get('/disease/index', [DiseaseController::class, 'index'])->name('disease.index');
     Route::get('/disease/create', [DiseaseController::class, 'create'])->name('disease.create');
     Route::post('/disease/store', [DiseaseController::class, 'store'])->name('disease.store');
-    //REVIEW ROUTES
+    Route::get('/disease/edit/{id}', [DiseaseController::class, 'edit'])->name('disease.edit');
+    Route::post('/disease/update/{id}', [DiseaseController::class, 'update'])->name('disease.update');
+    Route::get('/disease/delete/{id}', [DiseaseController::class, 'delete'])->name('disease.delete');
+    // Review Routes
     Route::get('/review/index', [ReviewController::class, 'index'])->name('review.index');
     Route::get('/review/create', [ReviewController::class, 'create'])->name('review.create');
     Route::post('/review/store', [ReviewController::class, 'store'])->name('review.store');
     Route::delete('/review/destroy/{id}', [ReviewController::class, 'destroy'])->name('review.destroy');
     Route::get('/review/edit/{id}', [ReviewController::class, 'edit'])->name('review.edit');
     Route::put('/review/update/{id}', [ReviewController::class, 'update'])->name('review.update');
+
 });
 
 require __DIR__.'/auth.php';
