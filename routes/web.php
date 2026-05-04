@@ -5,6 +5,9 @@ use App\Http\Controllers\DiseaseController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ArticleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,7 +47,29 @@ Route::middleware('auth')->group(function () {
     Route::delete('/review/destroy/{id}', [ReviewController::class, 'destroy'])->name('review.destroy');
     Route::get('/review/edit/{id}', [ReviewController::class, 'edit'])->name('review.edit');
     Route::put('/review/update/{id}', [ReviewController::class, 'update'])->name('review.update');
+    Route::get('/permission/index', [PermissionController::class, 'index'])->name('permission.index');
+    Route::get('/permission/create', [PermissionController::class, 'create'])->name('permission.create');
+    Route::post('/permission/store', [PermissionController::class, 'store'])->name('permission.store');
+    Route::get('/permission/edit/{id}', [PermissionController::class, 'edit'])->name('permission.edit');
+    Route::put('/permission/update/{id}', [PermissionController::class, 'update'])->name('permission.update');
+    Route::delete('/permission/destroy/{id}', [PermissionController::class, 'destroy'])->name('permission.destroy');
+    Route::get('/role/index', [RoleController::class, 'index'])->name('role.index');
+    Route::get('/role/create', [RoleController::class, 'create'])->name('role.create');
+    Route::post('/role/store', [RoleController::class, 'store'])->name('role.store');
+    Route::get('/role/edit/{id}', [RoleController::class, 'edit'])->name('role.edit');
+    Route::put('/role/update/{id}', [RoleController::class, 'update'])->name('role.update');
+    Route::delete('/role/destroy/{id}', [RoleController::class, 'destroy'])->name('role.destroy');
+    
+    // Article Routes
+    Route::get('/article/index', [ArticleController::class, 'index'])->name('article.index');
+    Route::get('/article/create', [ArticleController::class, 'create'])->name('article.create');
+    Route::post('/article/store', [ArticleController::class, 'store'])->name('article.store');
+    Route::get('/article/edit/{id}', [ArticleController::class, 'edit'])->name('article.edit');
+    Route::put('/article/update/{id}', [ArticleController::class, 'update'])->name('article.update');
+    Route::delete('/article/destroy/{id}', [ArticleController::class, 'destroy'])->name('article.destroy');
 
 });
+
+ 
 
 require __DIR__.'/auth.php';

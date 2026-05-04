@@ -14,17 +14,17 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="#">
+          <a class="nav-link " href="{{ route('about.page') }}">
             <i class="fas fa-info-circle me-1"></i>About Us
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="#">
+          <a class="nav-link " href="{{ route('contact.page') }}">
             <i class="fas fa-envelope me-1"></i>Contact Us
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="#">
+          <a class="nav-link " href="{{ route('dermatologists.page') }}">
             <i class="fas fa-user-md me-1"></i>Dermatologists
           </a>
         </li>

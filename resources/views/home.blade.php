@@ -17,9 +17,7 @@
           <a href="#" class="btn-hero-primary">
             <i class="fas fa-calendar-check"></i> Book Appointment
           </a>
-          <a href="#" class="btn-hero-secondary">
-            <i class="fas fa-play-circle"></i> How it Works
-          </a>
+          
         </div>
         <div class="hero-stats">
           <div>
