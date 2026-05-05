@@ -94,7 +94,7 @@
           <div class="switch-role">
             <i class="fas fa-stethoscope me-2" style="color:var(--primary)"></i>
             Are you a dermatologist?
-            <a href="">Register here instead <i class="fas fa-arrow-right ms-1" style="font-size:.7rem"></i></a>
+            <a href="{{ route('register.dermatologist') }}">Register here instead <i class="fas fa-arrow-right ms-1" style="font-size:.7rem"></i></a>
           </div>
 
           <form action="" method="POST" id="patientRegisterForm">

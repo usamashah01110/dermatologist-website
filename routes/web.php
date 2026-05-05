@@ -25,6 +25,7 @@ Route::get('/booking', [MainController::class, 'booking'])->name('booking.page')
 
 Route::get('/register/dermatologist', [DermatologistController::class, 'index'])->name('register.dermatologist');
 Route::get('/skincare', [SkincareController::class, 'index'])->name('skincare.page');
+Route::get('/skincare/detail', [SkincareController::class, 'skincaredetail'])->name('skincare.detail');
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');

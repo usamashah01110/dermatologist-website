@@ -10,4 +10,9 @@ class SkincareController extends Controller
     {
         return view('skincare');
     }
+
+      public function skincaredetail()
+    {
+        return view('skincare-detail');
+    }
 }

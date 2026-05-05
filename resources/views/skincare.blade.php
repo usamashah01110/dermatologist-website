@@ -76,7 +76,7 @@
               <span class="article-meta-item"><i class="far fa-clock"></i> 8 min read</span>
             </div>
 
-            <a href="#" class="btn-read">
+            <a href="{{ route('skincare.detail') }}" class="btn-read">
               Read Full Article <i class="fas fa-arrow-right"></i>
             </a>
           </div>
@@ -115,7 +115,7 @@
                 <div class="article-author-avatar">AS</div>
                 <span>Apr 22, 2026</span>
               </div>
-              <a href="#" class="article-read-link">Read <i class="fas fa-arrow-right"></i></a>
+              <a href="{{ route('skincare.detail') }}" class="article-read-link">Read <i class="fas fa-arrow-right"></i></a>
             </div>
           </div>
         </article>
@@ -136,7 +136,7 @@
                 <div class="article-author-avatar">RM</div>
                 <span>Apr 18, 2026</span>
               </div>
-              <a href="#" class="article-read-link">Read <i class="fas fa-arrow-right"></i></a>
+              <a href="{{ route('skincare.detail') }}" class="article-read-link">Read <i class="fas fa-arrow-right"></i></a>
             </div>
           </div>
         </article>
@@ -157,7 +157,7 @@
                 <div class="article-author-avatar">SA</div>
                 <span>Apr 15, 2026</span>
               </div>
-              <a href="#" class="article-read-link">Read <i class="fas fa-arrow-right"></i></a>
+              <a href="{{ route('skincare.detail') }}" class="article-read-link">Read <i class="fas fa-arrow-right"></i></a>
             </div>
           </div>
         </article>
@@ -178,7 +178,7 @@
                 <div class="article-author-avatar">HZ</div>
                 <span>Apr 12, 2026</span>
               </div>
-              <a href="#" class="article-read-link">Read <i class="fas fa-arrow-right"></i></a>
+              <a href="{{ route('skincare.detail') }}" class="article-read-link">Read <i class="fas fa-arrow-right"></i></a>
             </div>
           </div>
         </article>
@@ -199,7 +199,7 @@
                 <div class="article-author-avatar">NH</div>
                 <span>Apr 08, 2026</span>
               </div>
-              <a href="#" class="article-read-link">Read <i class="fas fa-arrow-right"></i></a>
+              <a href="{{ route('skincare.detail') }}" class="article-read-link">Read <i class="fas fa-arrow-right"></i></a>
             </div>
           </div>
         </article>
