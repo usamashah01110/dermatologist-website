@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DiseaseController;
 use App\Http\Controllers\DermatologistController;
+use App\Http\Controllers\SkincareController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,7 @@ Route::get('/dermatologists', [MainController::class, 'dermatologists'])->name('
 Route::get('/booking', [MainController::class, 'booking'])->name('booking.page');
 
 Route::get('/register/dermatologist', [DermatologistController::class, 'index'])->name('register.dermatologist');
+Route::get('/skincare', [SkincareController::class, 'index'])->name('skincare.page');
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');

@@ -10,6 +10,7 @@
   <link href="{{ asset('style.css') }}" rel="stylesheet"/>
   <link href="{{ asset('dermatogist.css') }}" rel="stylesheet"/>
   <link href="{{ asset('register.css') }}" rel="stylesheet"/>
+  <link href="{{ asset('skincare.css') }}" rel="stylesheet"/>
 </head>
 
 <body>

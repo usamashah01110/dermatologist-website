@@ -31,6 +31,11 @@
             </a>
         </li>
             
+           <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('skincare.page') ? 'active' : '' }}" href="{{ route('skincare.page') }}">
+                <i class="fas fa-spa me-1"></i>Skin Care
+            </a>
+        </li>
         
       </ul>
       <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0">
