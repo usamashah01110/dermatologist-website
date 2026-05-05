@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DiseaseController;
+use App\Http\Controllers\DermatologistController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,8 @@ Route::get('/about', [MainController::class, 'about'])->name('about.page');
 Route::get('/contact', [MainController::class, 'contact'])->name('contact.page');
 Route::get('/dermatologists', [MainController::class, 'dermatologists'])->name('dermatologists.page');
 Route::get('/booking', [MainController::class, 'booking'])->name('booking.page');
+
+Route::get('/register/dermatologist', [DermatologistController::class, 'index'])->name('register.dermatologist');
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');

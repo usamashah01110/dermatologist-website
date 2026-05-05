@@ -8,6 +8,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
   <link href="{{ asset('style.css') }}" rel="stylesheet"/>
+  <link href="{{ asset('dermatogist.css') }}" rel="stylesheet"/>
+  <link href="{{ asset('register.css') }}" rel="stylesheet"/>
 </head>
 
 <body>

@@ -113,7 +113,7 @@
             </div>
           </div>
 
-          <a href="#" class="btn-register mt-2">
+          <a href="{{ route('register.dermatologist') }}" class="btn-register mt-2">
             <i class="fas fa-stethoscope"></i> Register as Dermatologist
           </a>
         </div>

@@ -13,22 +13,24 @@
             <i class="fas fa-home me-1"></i>Home
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link " href="#">
-            <i class="fas fa-info-circle me-1"></i>About Us
-          </a>
+      <li class="nav-item">
+    <a class="nav-link {{ request()->routeIs('about.page') ? 'active' : '' }}" href="{{ route('about.page') }}">
+        <i class="fas fa-info-circle me-1"></i>About Us
+    </a>
         </li>
+
         <li class="nav-item">
-          <a class="nav-link " href="#">
-            <i class="fas fa-envelope me-1"></i>Contact Us
-          </a>
+            <a class="nav-link {{ request()->routeIs('contact.page') ? 'active' : '' }}" href="{{ route('contact.page') }}">
+                <i class="fas fa-envelope me-1"></i>Contact Us
+            </a>
         </li>
+
         <li class="nav-item">
-          <a class="nav-link " href="#">
-            <i class="fas fa-user-md me-1"></i>Dermatologists
-          </a>
+            <a class="nav-link {{ request()->routeIs('dermatologists.page') ? 'active' : '' }}" href="{{ route('dermatologists.page') }}">
+                <i class="fas fa-user-md me-1"></i>Dermatologists
+            </a>
         </li>
-     
+            
         
       </ul>
       <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0">
