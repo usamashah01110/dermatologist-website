@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Review;
 class ReviewController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:manage reviews');
+    }
+
     public function index()
     {
         // databse se data lany k lie

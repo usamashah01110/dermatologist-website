@@ -8,6 +8,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -59,6 +60,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/role/edit/{id}', [RoleController::class, 'edit'])->name('role.edit');
     Route::put('/role/update/{id}', [RoleController::class, 'update'])->name('role.update');
     Route::delete('/role/destroy/{id}', [RoleController::class, 'destroy'])->name('role.destroy');
+
+    // User Routes
+    Route::get('/user/index', [UserController::class, 'index'])->name('user.index');
+    Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
+    Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
+    Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('/user/update/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/user/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
     
     // Article Routes
     Route::get('/article/index', [ArticleController::class, 'index'])->name('article.index');

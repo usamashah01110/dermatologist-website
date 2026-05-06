@@ -8,6 +8,11 @@ use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:manage roles');
+    }
+
     public function index() {
         $roles = Role::all();
         return view('admin.roles.index', compact('roles'));

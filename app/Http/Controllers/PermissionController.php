@@ -7,6 +7,11 @@ use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:manage permissions');
+    }
+
     public function index() {
         $permissions = Permission::all();
         return view('admin.permissions.index', compact('permissions'));

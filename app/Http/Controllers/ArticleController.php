@@ -8,6 +8,11 @@ use spatie\permission\Models\Permission;
 use spatie\permission\Models\Role;
 class ArticleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:manage articles');
+    }
+
     public function index() {
         $articles = Article::all();
         return view('admin.articles.index', compact('articles'));

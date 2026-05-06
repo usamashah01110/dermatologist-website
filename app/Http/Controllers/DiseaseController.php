@@ -7,6 +7,11 @@ use App\Models\Disease;
 
 class DiseaseController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:manage diseases');
+    }
+
     public function index(){
         $diseases = Disease::all();
         return view('admin.disease.index', compact('diseases'));
