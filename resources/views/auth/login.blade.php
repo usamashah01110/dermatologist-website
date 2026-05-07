@@ -553,8 +553,8 @@
                   <p>Enter your credentials to access your account.</p>
                 </div>
 
-                <form action="#" method="POST" id="loginForm">
-
+                <form action="{{ route('login') }}" method="POST" id="loginForm">
+                    @csrf
                   <label class="login-form-label" for="email">Email Address</label>
                   <div class="login-input-wrapper">
                     <input type="email" id="email" name="email" class="login-form-input" placeholder="you@example.com" required autocomplete="email">
@@ -585,7 +585,7 @@
                   <div class="login-divider">or continue with</div>
 
                   <div class="social-login-row">
-                    <a href="#" class="btn-social">
+                    <a href="{{ route('auth.google') }}" class="btn-social">
                       <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
                       Google
                     </a>

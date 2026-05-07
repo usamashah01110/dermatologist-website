@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DiseaseController;
 use App\Http\Controllers\DermatologistController;
@@ -47,5 +48,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/disease/delete/{id}', [DiseaseController::class, 'delete'])->name('disease.delete');
 
 });
+
+Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('auth.google');
+Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
 
 require __DIR__.'/auth.php';
