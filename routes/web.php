@@ -24,13 +24,18 @@ Route::get('/contact', [MainController::class, 'contact'])->name('contact.page')
 Route::get('/dermatologists', [MainController::class, 'dermatologists'])->name('dermatologists.page');
 Route::get('/booking', [MainController::class, 'booking'])->name('booking.page');
 
-Route::get('/register/dermatologist', [DermatologistController::class, 'index'])->name('register.dermatologist');
 Route::get('/skincare', [SkincareController::class, 'index'])->name('skincare.page');
 Route::get('/skincare/detail', [SkincareController::class, 'skincaredetail'])->name('skincare.detail');
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+//Dermatologist Routes
+Route::get('/register/dermatologist', [DermatologistController::class, 'index'])->name('register.dermatologist');
+Route::post('/store/dermatologist', [DermatologistController::class, 'store'])->name('store.dermatologist');
+
 
 
 Route::middleware('auth')->group(function () {
