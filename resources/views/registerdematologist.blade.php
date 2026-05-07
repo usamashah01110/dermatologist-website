@@ -304,13 +304,10 @@
 
     @push('scripts')
 
-        <!-- SweetAlert2 -->
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {
 
-                // ── File Upload Preview ─────────────────────────────
                 const fileInput  = document.getElementById('profile_image');
                 const wrapper    = document.getElementById('fileUploadWrapper');
                 const preview    = document.getElementById('filePreview');
@@ -362,7 +359,6 @@
                     });
                 }
 
-                // ── AJAX Form Submission ────────────────────────────
                 const form = document.getElementById('dermatologistRegisterForm');
 
                 if (!form) {
@@ -376,7 +372,6 @@
                 const submitBtn      = form.querySelector('.btn-submit');
                 const originalBtnHtml = submitBtn.innerHTML;
 
-                // Clear validation errors
                 function clearErrors() {
 
                     document.querySelectorAll('.ajax-error').forEach(el => el.remove());
@@ -389,7 +384,6 @@
                     alertBox.innerHTML = '';
                 }
 
-                // Show validation errors
                 function showErrors(errors) {
 
                     Object.keys(errors).forEach(field => {
@@ -410,7 +404,6 @@
                     });
                 }
 
-                // Alert box
                 function showAlert(type, message) {
 
                     alertBox.className = `alert alert-${type}`;
@@ -418,14 +411,12 @@
                     alertBox.style.display = 'block';
                 }
 
-                // Submit Form
                 form.addEventListener('submit', async function (e) {
 
                     e.preventDefault();
 
                     clearErrors();
 
-                    // Password validation
                     if (password.value !== confirmInput.value) {
 
                         showErrors({
@@ -435,7 +426,6 @@
                         return;
                     }
 
-                    // Disable button
                     submitBtn.disabled = true;
 
                     submitBtn.innerHTML =
@@ -462,7 +452,6 @@
                             console.error('Invalid JSON response');
                         }
 
-                        // Validation errors
                         if (response.status === 422) {
 
                             showErrors(data.errors || {});
@@ -475,7 +464,6 @@
 
                         }
 
-                        // Success
                         else if (response.ok) {
 
                             Swal.fire({
@@ -499,7 +487,6 @@
 
                         }
 
-                        // Other errors
                         else {
 
                             Swal.fire({

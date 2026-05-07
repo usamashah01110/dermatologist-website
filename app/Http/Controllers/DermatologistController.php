@@ -63,7 +63,6 @@ class DermatologistController extends Controller
                 return $user;
             });
 
-            // AJAX Response
             if ($request->ajax()) {
 
                 return response()->json([
