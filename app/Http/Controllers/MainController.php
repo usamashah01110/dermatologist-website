@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dermatologist;
 use Illuminate\Http\Request;
 use App\Models\Disease;
 
@@ -80,7 +81,7 @@ class MainController extends Controller
     }
 
     public function dermatologists() {
-        $doctors = $this->doctorList();
+        $doctors = Dermatologist::with('user')->where('status', 'approved')->get();
 
         return view('dermatologist', compact('doctors'));
     }

@@ -34,6 +34,7 @@ Route::get('/dashboard', function () {
 
 //Dermatologist Routes
 Route::get('/register/dermatologist', [DermatologistController::class, 'index'])->name('register.dermatologist');
+Route::get('/dermatologist/detail/{id}', [DermatologistController::class, 'detailDermatologist'])->name('dermatologist.detail');
 Route::post('/store/dermatologist', [DermatologistController::class, 'store'])->name('store.dermatologist');
 
 

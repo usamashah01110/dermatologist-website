@@ -16,6 +16,14 @@ class DermatologistController extends Controller
        return view('registerdematologist');
     }
 
+    public function detailDermatologist($id)
+    {
+        $doctor = Dermatologist::with('user')->where('status', 'approved')->where('id', $id)->get();
+        dd($doctor);
+        return view('dermatologistdetailpage', compact('doctor'));
+
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
