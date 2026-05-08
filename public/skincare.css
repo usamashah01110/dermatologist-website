@@ -448,10 +448,9 @@
       color: var(--text-dark);
       line-height: 1.4;
       margin-bottom: 12px;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: normal;
     }
 
     .article-content > p {
@@ -459,10 +458,9 @@
       color: var(--text-mid);
       line-height: 1.65;
       margin-bottom: 20px;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: normal;
       flex: 1;
     }
 

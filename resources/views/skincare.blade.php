@@ -27,16 +27,16 @@
     <div class="featured-card">
       <div class="featured-row">
         <div class="featured-media">
-      <img src= "https://vibrantdermatology.com/what-is-the-difference-between-aquafacial-and-hydrafacial/"
-     alt= "picture of hydrafacial treatment"
-     loading="lazy" 
-     style="height: 200px; object-fit: cover; width: 100%;">
+          <img src="https://images.unsplash.com/photo-1535968884750-2127dfccd8c6?auto=format&fit=crop&w=1200&q=80"
+               alt="HydraFacial treatment"
+               loading="lazy"
+               style="height: 200px; object-fit: cover; width: 100%;">
         </div>
         <div class="featured-details">
-          <h2> HydraFacial</h2>
-          <p> A HydraFacial is a popular, non-invasive skin treatment that cleanses, exfoliates, and hydrates the face in one quick, comfortable session. Using a special vacuum-like wand, it gently removes dead skin cells and sucks out impurities from pores, while simultaneously pushing in nourishing serums filled with antioxidants and hyaluronic acid. It is designed for all skin types, aims to improve skin texture and tone, and reduces the appearance of fine lines, wrinkles, and oily skin. Because it is gentle and provides an instant glow without any downtime or pain, many people call it the "lunch-break facial</p>
-          <div class="article-meta">
-            
+          <h2>HydraFacial</h2>
+          <p>A HydraFacial is a popular, non-invasive skin treatment that cleanses, exfoliates, and hydrates the face in one quick, comfortable session. Using a special vacuum-like wand, it gently removes dead skin cells and sucks out impurities from pores, while simultaneously pushing in nourishing serums filled with antioxidants and hyaluronic acid. It is designed for all skin types, aims to improve skin texture and tone, and reduces the appearance of fine lines, wrinkles, and oily skin. Because it is gentle and provides an instant glow without any downtime or pain, many people call it the "lunch-break facial".</p>
+          <div class="article-meta"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -60,8 +60,7 @@
           <div class="article-content">
             <span class="article-category"><i class="fas fa-heart"></i> Skincare</span>
             <h5>{{ $article->title }}</h5>
-            <p>{{ Str::limit($article->content, 120) }}</p>
-            
+            <p>{!! nl2br(e($article->content)) !!}</p>
           </div>
         </article>
       </div>
