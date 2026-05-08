@@ -25,14 +25,14 @@ Route::get('/booking', [MainController::class, 'booking'])->name('booking.page')
 
 Route::get('/register/dermatologist', [DermatologistController::class, 'index'])->name('register.dermatologist');
 Route::get('/skincare', [SkincareController::class, 'index'])->name('skincare.page');
-Route::get('/skincare/detail', [SkincareController::class, 'skincaredetail'])->name('skincare.detail');
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->name('dashboard');
 
-
+   
 Route::middleware('auth')->group(function () {
+     
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -45,6 +45,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/disease/edit/{id}', [DiseaseController::class, 'edit'])->name('disease.edit');
     Route::post('/disease/update/{id}', [DiseaseController::class, 'update'])->name('disease.update');
     Route::get('/disease/delete/{id}', [DiseaseController::class, 'delete'])->name('disease.delete');
+
+    // Skincare CRUD Routes
+    Route::get('/skincare/index', [SkincareController::class, 'adminIndex'])->name('skincare.index');
+    Route::get('/skincare/create', [SkincareController::class, 'create'])->name('skincare.create');
+    Route::post('/skincare/store', [SkincareController::class, 'store'])->name('skincare.store');
+    Route::get('/skincare/edit/{id}', [SkincareController::class, 'edit'])->name('skincare.edit');
+    Route::post('/skincare/update/{id}', [SkincareController::class, 'update'])->name('skincare.update');
+    Route::get('/skincare/delete/{id}', [SkincareController::class, 'delete'])->name('skincare.delete');
 
 });
 

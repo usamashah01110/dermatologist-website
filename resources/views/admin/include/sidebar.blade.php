@@ -29,6 +29,18 @@
                 Disease
             </a>
         </li>
+        <li class="menu-item ">
+            <a href="{{ route('skincare.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-heart-circle"></i>
+                Skincare
+            </a>
+        </li>
+        <li class="menu-item ">
+            <a href="{{ route('skincare.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-spa"></i>
+                Skin Services
+            </a>
+        </li>
 
 
 

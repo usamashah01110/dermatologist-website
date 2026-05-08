@@ -553,7 +553,8 @@
                   <p>Enter your credentials to access your account.</p>
                 </div>
 
-                <form action="#" method="POST" id="loginForm">
+                <form action="{{ route('login') }}" method="POST" id="loginForm">
+                  @csrf
 
                   <label class="login-form-label" for="email">Email Address</label>
                   <div class="login-input-wrapper">
@@ -575,21 +576,12 @@
                       <input type="checkbox" id="remember" name="remember">
                       <label for="remember">Remember me</label>
                     </div>
-                    <a href="#" class="forgot-link">Forgot password?</a>
+                    <a href="{{ route('password.request') }}" class="forgot-link">Forgot password?</a>
                   </div>
 
                   <button type="submit" class="btn-login">
                     Sign In <i class="fas fa-arrow-right"></i>
                   </button>
-
-                  <div class="login-divider">or continue with</div>
-
-                  <div class="social-login-row">
-                    <a href="#" class="btn-social">
-                      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
-                      Google
-                    </a>
-                  </div>
 
                   <div class="signup-prompt">
                     <strong>New to DermaConnect?</strong>
