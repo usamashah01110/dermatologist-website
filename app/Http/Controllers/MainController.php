@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Disease;
+use App\Models\Review;
 
 class MainController extends Controller
 {
     public function home() {
         $diseases = Disease::all();
-        return view('home', compact('diseases'));
+        $reviews=Review::all();
+        return view('home', compact('diseases','reviews'));
+
     }
 
     public function about() {

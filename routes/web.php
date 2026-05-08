@@ -6,7 +6,11 @@ use App\Http\Controllers\DermatologistController;
 use App\Http\Controllers\SkincareController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,23 +34,29 @@ Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->name('dashboard');
 
+    
+    
    
 Route::middleware('auth')->group(function () {
      
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-
-    // Disease Routes
+     // Disease Routes
     Route::get('/disease/index', [DiseaseController::class, 'index'])->name('disease.index');
     Route::get('/disease/create', [DiseaseController::class, 'create'])->name('disease.create');
     Route::post('/disease/store', [DiseaseController::class, 'store'])->name('disease.store');
     Route::get('/disease/edit/{id}', [DiseaseController::class, 'edit'])->name('disease.edit');
     Route::post('/disease/update/{id}', [DiseaseController::class, 'update'])->name('disease.update');
     Route::get('/disease/delete/{id}', [DiseaseController::class, 'delete'])->name('disease.delete');
-
-    // Skincare CRUD Routes
+    // Review Routes
+    Route::get('/review/index', [ReviewController::class, 'index'])->name('review.index');
+    Route::get('/review/create', [ReviewController::class, 'create'])->name('review.create');
+    Route::post('/review/store', [ReviewController::class, 'store'])->name('review.store');
+    Route::delete('/review/destroy/{id}', [ReviewController::class, 'destroy'])->name('review.destroy');
+    Route::get('/review/edit/{id}', [ReviewController::class, 'edit'])->name('review.edit');
+    Route::put('/review/update/{id}', [ReviewController::class, 'update'])->name('review.update');
+    // Skincare Routes
     Route::get('/skincare/index', [SkincareController::class, 'adminIndex'])->name('skincare.index');
     Route::get('/skincare/create', [SkincareController::class, 'create'])->name('skincare.create');
     Route::post('/skincare/store', [SkincareController::class, 'store'])->name('skincare.store');
@@ -54,6 +64,40 @@ Route::middleware('auth')->group(function () {
     Route::post('/skincare/update/{id}', [SkincareController::class, 'update'])->name('skincare.update');
     Route::get('/skincare/delete/{id}', [SkincareController::class, 'delete'])->name('skincare.delete');
 
+    //   Permission
+    Route::get('/permission/index', [PermissionController::class, 'index'])->name('permission.index');
+    Route::get('/permission/create', [PermissionController::class, 'create'])->name('permission.create');
+    Route::post('/permission/store', [PermissionController::class, 'store'])->name('permission.store');
+    Route::get('/permission/edit/{id}', [PermissionController::class, 'edit'])->name('permission.edit');
+    Route::put('/permission/update/{id}', [PermissionController::class, 'update'])->name('permission.update');
+    Route::delete('/permission/destroy/{id}', [PermissionController::class, 'destroy'])->name('permission.destroy');
+    // Role Routes
+    Route::get('/role/index', [RoleController::class, 'index'])->name('role.index');
+    Route::get('/role/create', [RoleController::class, 'create'])->name('role.create');
+    Route::post('/role/store', [RoleController::class, 'store'])->name('role.store');
+    Route::get('/role/edit/{id}', [RoleController::class, 'edit'])->name('role.edit');
+    Route::put('/role/update/{id}', [RoleController::class, 'update'])->name('role.update');
+    Route::delete('/role/destroy/{id}', [RoleController::class, 'destroy'])->name('role.destroy');
+
+    // User Routes
+    Route::get('/user/index', [UserController::class, 'index'])->name('user.index');
+    Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
+    Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
+    Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('/user/update/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/user/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+    
+    // Article Routes
+    Route::get('/article/index', [ArticleController::class, 'index'])->name('article.index');
+    Route::get('/article/create', [ArticleController::class, 'create'])->name('article.create');
+    Route::post('/article/store', [ArticleController::class, 'store'])->name('article.store');
+    Route::get('/article/edit/{id}', [ArticleController::class, 'edit'])->name('article.edit');
+    Route::put('/article/update/{id}', [ArticleController::class, 'update'])->name('article.update');
+    Route::delete('/article/destroy/{id}', [ArticleController::class, 'destroy'])->name('article.destroy');
+
+    
 });
+
+ 
 
 require __DIR__.'/auth.php';
