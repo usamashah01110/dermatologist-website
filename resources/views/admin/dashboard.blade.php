@@ -12,7 +12,8 @@
                                     You have done 72% more sales today.<br />Check your new badge in your profile.
                                 </p>
 
-                                <a href="javascript:;" class="btn btn-sm btn-outline-primary">View Badges</a>
+                                <a href="#" class="btn btn-sm btn-outline-primary" onclick="return false;">View Badges</a>
+                                <a href="{{ route('skincare.index') }}" class="btn btn-sm btn-primary ms-2">Manage Skincare</a>
                             </div>
                         </div>
                         <div class="col-sm-5 text-center text-sm-left">
@@ -49,8 +50,8 @@
                                             <i class="icon-base bx bx-dots-vertical-rounded text-body-secondary"></i>
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-                                            <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                                        <a class="dropdown-item" href="#" onclick="return false;">View More</a>
+                                        <a class="dropdown-item" href="#" onclick="return false;">Delete</a>
                                         </div>
                                     </div>
                                 </div>

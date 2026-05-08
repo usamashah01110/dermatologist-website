@@ -22,7 +22,7 @@
                 <div class="text-truncate" data-i18n="Dashboards">Dashboards</div>
             </a>
         </li>
-
+        <!-- disease button -->
         <li class="menu-item ">
             <a href="{{ route('disease.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-smile"></i>
@@ -30,7 +30,46 @@
             </a>
         </li>
 
+        <!-- Skin Services -->
+        <li class="menu-item ">
+            <a href="{{ route('skincare.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-spa"></i>
+                Skin Services
+            </a>
+        </li>
 
-
+ 
+        <!-- Review Cards -->
+          <li class="menu-item ">
+            <a href="{{ route('review.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                Review Cards
+            </a>
+        </li>
+        <li class="menu-item ">
+            <a href="{{ route('permission.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                Permissions
+            </a>
+        </li>
+         <li class="menu-item ">
+            <a href="{{ route('role.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-smile"></i>
+         Roles
+            </a>
+        </li>
+        <!-- Articles -->
+        <li class="menu-item ">
+            <a href="{{ route('article.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                Articles
+            </a>
+        </li>
+          
+         <li class="menu-item ">
+            <a href="{{ route('user.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                Users
+            </a>
     </ul>
 </aside>
