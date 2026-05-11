@@ -71,5 +71,12 @@
                 <i class="menu-icon tf-icons bx bx-home-smile"></i>
                 Users
             </a>
+             </li>
+               <li class="menu-item ">
+            <a href="{{ route('dermatologist.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                view Dermatologist
+            </a>
+             </li>
     </ul>
 </aside>

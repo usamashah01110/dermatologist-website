@@ -10,7 +10,19 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class DermatologistController extends Controller
+
 {
+    public function adminindex()
+    {
+$doctors=Dermatologist::with('user')->get();
+return view('admin.dermatologist.index',compact('doctors'));
+    }
+
+
+
+
+
+
     public function index(Request $request)
     {
        return view('registerdematologist');
@@ -23,6 +35,34 @@ class DermatologistController extends Controller
         return view('dermatologistdetailpage', compact('doctor'));
 
     }
+    public function edit($id)
+    {
+        $dermatologist=Dermatologist::findOrFail($id);
+        return view('admin.dermatologist.edit', compact('dermatologist'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $dermatologist = Dermatologist::findOrFail($id);
+        $dermatologist->status = $request->status;
+        $dermatologist->save();
+
+        return redirect()->route('dermatologist.index')->with('success', 'Dermatologist status updated successfully.');
+    }
+
+    public function destroy($id)
+    {
+        $dermatologist = Dermatologist::findOrFail($id);
+
+        if ($dermatologist->user) {
+            $dermatologist->user->delete();
+        }
+
+        $dermatologist->delete();
+
+        return redirect()->route('dermatologist.index')->with('success', 'Dermatologist deleted successfully.');
+    }
+    
 
     public function store(Request $request)
     {
