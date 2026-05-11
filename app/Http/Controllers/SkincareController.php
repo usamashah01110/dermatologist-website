@@ -11,7 +11,9 @@ class SkincareController extends Controller
     {
         // public skincare page ke liye database se articles fetch kar raha hun
         $articles = Skincare::latest()->get();
-        return view('skincare', compact('articles'));
+        $featured = Skincare::where('featured', '1')->get();
+      
+        return view('skincare', compact('articles','featured'));
     }
 
     public function adminIndex()
@@ -86,4 +88,19 @@ class SkincareController extends Controller
         $skincare->delete();
         return redirect()->route('skincare.index');
     }
+
+    public function toggleFeatured($id)
+{
+    $article = Skincare::findOrFail($id);
+    $article->featured = ! $article->featured;
+    $article->save();
+
+    return response()->json([
+        'success'  => true,
+        'featured' => $article->featured,
+        'message'  => $article->featured
+            ? 'Article marked as featured.'
+            : 'Article removed from featured.',
+    ]);
+}
 }

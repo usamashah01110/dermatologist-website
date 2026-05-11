@@ -13,6 +13,7 @@
                   <th>ID</th>
                   <th>Title</th>
                   <th>Content</th>
+                   <th>Featured</th>
                   <th>Image</th>
                   <th>Actions</th>
                </tr>
@@ -23,6 +24,17 @@
                   <td>{{ $article->id }}</td>
                   <td>{{ $article->title }}</td>
                   <td>{{ Str::limit($article->content, 60) }}</td>
+                   <td>
+                     <div class="form-check form-switch">
+                        <input
+                           class="form-check-input featured-toggle"
+                           type="checkbox"
+                           role="switch"
+                           data-id="{{ $article->id }}"
+                           data-url="{{ route('skincare.toggleFeatured', $article->id) }}"
+                           {{ $article->featured ? 'checked' : '' }}>
+                     </div>
+                  </td>
                   <td>
                      @if($article->image_path)
                      <img src="{{ asset($article->image_path) }}" alt="Article Image" class="rounded-circle" style="width: 50px; height: 50px;">
@@ -54,4 +66,39 @@
       </div>
    </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const toggles = document.querySelectorAll('.featured-toggle');
+
+    toggles.forEach(toggle => {
+        toggle.addEventListener('change', function () {
+            const url = this.dataset.url;
+            const checkbox = this;
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log(data.message);
+                } else {
+                    checkbox.checked = !checkbox.checked;
+                    alert(data.message || 'Failed to update.');
+                }
+            })
+            .catch(() => {
+                checkbox.checked = !checkbox.checked;
+                alert('Something went wrong.');
+            });
+        });
+    });
+});
+</script>
 @endsection

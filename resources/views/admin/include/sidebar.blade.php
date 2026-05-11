@@ -23,6 +23,7 @@
             </a>
         </li>
         <!-- disease button -->
+        @if(auth()->user()->hasRole('superadmin'))
         <li class="menu-item ">
             <a href="{{ route('disease.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-smile"></i>
@@ -46,36 +47,54 @@
                 Review Cards
             </a>
         </li>
+        @endif
+         @if(auth()->user()->hasRole('superadmin'))
         <li class="menu-item ">
             <a href="{{ route('permission.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-smile"></i>
                 Permissions
             </a>
         </li>
+        @endif
+        @if(auth()->user()->hasRole('superadmin'))
          <li class="menu-item ">
             <a href="{{ route('role.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-smile"></i>
          Roles
             </a>
         </li>
+        @endif
         <!-- Articles -->
-        <li class="menu-item ">
-            <a href="{{ route('article.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-smile"></i>
-                Articles
-            </a>
-        </li>
-          
+    
+          @if(auth()->user()->hasRole('superadmin'))
          <li class="menu-item ">
             <a href="{{ route('user.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-smile"></i>
                 Users
             </a>
              </li>
+       
+
                <li class="menu-item ">
             <a href="{{ route('dermatologist.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-smile"></i>
                 view Dermatologist
+            </a>
+             </li>
+              @endif
+
+
+            <li class="menu-item ">
+            <a href="{{ route('dermatologist.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                Appointments
+            </a>
+             </li>
+
+             <li class="menu-item ">
+            <a href="{{ route('dermatologist.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                Patients
             </a>
              </li>
     </ul>

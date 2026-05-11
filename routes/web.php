@@ -35,14 +35,10 @@ Route::get('/dashboard', function () {
 })->name('dashboard');
 
 
-
-
-
 //Dermatologist Routes
 Route::get('/register/dermatologist', [DermatologistController::class, 'index'])->name('register.dermatologist');
 Route::get('/dermatologist/detail/{id}', [DermatologistController::class, 'detailDermatologist'])->name('dermatologist.detail');
 Route::post('/store/dermatologist', [DermatologistController::class, 'store'])->name('store.dermatologist');
-
 
 
 Route::middleware('auth')->group(function () {
@@ -57,6 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/disease/edit/{id}', [DiseaseController::class, 'edit'])->name('disease.edit');
     Route::post('/disease/update/{id}', [DiseaseController::class, 'update'])->name('disease.update');
     Route::get('/disease/delete/{id}', [DiseaseController::class, 'delete'])->name('disease.delete');
+
     // Review Routes
     Route::get('/review/index', [ReviewController::class, 'index'])->name('review.index');
     Route::get('/review/create', [ReviewController::class, 'create'])->name('review.create');
@@ -71,6 +68,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/skincare/edit/{id}', [SkincareController::class, 'edit'])->name('skincare.edit');
     Route::post('/skincare/update/{id}', [SkincareController::class, 'update'])->name('skincare.update');
     Route::get('/skincare/delete/{id}', [SkincareController::class, 'delete'])->name('skincare.delete');
+    Route::post('skincare/{id}/toggle-featured', [SkincareController::class, 'toggleFeatured'])
+    ->name('skincare.toggleFeatured');
 
     //   Permission
     Route::get('/permission/index', [PermissionController::class, 'index'])->name('permission.index');
@@ -104,10 +103,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/article/destroy/{id}', [ArticleController::class, 'destroy'])->name('article.destroy');
 
             // route of index page
-Route::get('/register/dermatologist/index', [DermatologistController::class, 'adminindex'])->name('dermatologist.index');
-Route::get('/dermatologist/edit/{id}', [DermatologistController::class, 'edit'])->name('dermatologist.edit');
-Route::post('/dermatologist/update/{id}', [DermatologistController::class, 'update'])->name('dermatologist.update');
-Route::delete('/dermatologist/destroy/{id}', [DermatologistController::class, 'destroy'])->name('dermatologist.destroy');
+    Route::get('/register/dermatologist/index', [DermatologistController::class, 'adminindex'])->name('dermatologist.index');
+    Route::get('/dermatologist/edit/{id}', [DermatologistController::class, 'edit'])->name('dermatologist.edit');
+    Route::post('/dermatologist/update/{id}', [DermatologistController::class, 'update'])->name('dermatologist.update');
+    Route::delete('/dermatologist/destroy/{id}', [DermatologistController::class, 'destroy'])->name('dermatologist.destroy');
 
 }
 );

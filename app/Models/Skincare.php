@@ -13,5 +13,6 @@ class Skincare extends Model
         'title',
         'content',
         'image_path',
+         'featured',
     ];
 }

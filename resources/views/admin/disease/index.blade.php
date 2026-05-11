@@ -25,6 +25,7 @@
                         <td>{{ $disease->name }}</td>
                         <td>{{ Str::limit($disease->description, 50) }}</td>
                         <td>{{ $disease->tag }}</td>
+                  
                         <td>
                           <img src="{{ asset($disease->image_path) }}" alt="Disease Image" class="rounded-circle" style="width: 50px; height: 50px;">
                         </td>
@@ -56,4 +57,6 @@
                 </div>
               </div>
 </div>
+
+
 @endsection

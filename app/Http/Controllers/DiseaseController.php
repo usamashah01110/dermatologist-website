@@ -78,4 +78,19 @@ class DiseaseController extends Controller
         $disease->delete();
         return redirect()->back();
     }
+
+    public function toggleFeatured($id)
+{
+    $disease = Disease::findOrFail($id);
+    $disease->featured = ! $disease->featured;
+    $disease->save();
+
+    return response()->json([
+        'success'  => true,
+        'featured' => $disease->featured,
+        'message'  => $disease->featured
+            ? 'Disease marked as featured.'
+            : 'Disease removed from featured.',
+    ]);
+}
 }

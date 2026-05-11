@@ -14,13 +14,9 @@ class DermatologistController extends Controller
 {
     public function adminindex()
     {
-$doctors=Dermatologist::with('user')->get();
-return view('admin.dermatologist.index',compact('doctors'));
+        $doctors=Dermatologist::with('user')->get();
+        return view('admin.dermatologist.index',compact('doctors'));
     }
-
-
-
-
 
 
     public function index(Request $request)
@@ -30,16 +26,16 @@ return view('admin.dermatologist.index',compact('doctors'));
 
     public function detailDermatologist($id)
     {
-        $doctor = Dermatologist::with('user')->where('status', 'approved')->where('id', $id)->get();
-        dd($doctor);
+        $doctor = Dermatologist::with('user')->where('status', 'approved')->where('id', $id)->first();
+
         return view('dermatologistdetailpage', compact('doctor'));
 
     }
-    public function edit($id)
-    {
-        $dermatologist=Dermatologist::findOrFail($id);
-        return view('admin.dermatologist.edit', compact('dermatologist'));
-    }
+        public function edit($id)
+        {
+            $dermatologist=Dermatologist::findOrFail($id);
+            return view('admin.dermatologist.edit', compact('dermatologist'));
+        }
 
     public function update(Request $request, $id)
     {
@@ -62,7 +58,7 @@ return view('admin.dermatologist.index',compact('doctors'));
 
         return redirect()->route('dermatologist.index')->with('success', 'Dermatologist deleted successfully.');
     }
-    
+
 
     public function store(Request $request)
     {
@@ -107,6 +103,8 @@ return view('admin.dermatologist.index',compact('doctors'));
                     'profile_image'     => $imagePath,
                     'status'            => 'pending',
                 ]);
+
+                $user->assignRole('dermatologist');
 
                 return $user;
             });
