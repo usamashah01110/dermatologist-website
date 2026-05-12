@@ -488,6 +488,34 @@
 
 @section('content')
 
+    <div class="toast-container-custom">
+        @if(session('success'))
+            <div class="toast-custom" id="successToast">
+                <i class="fas fa-check-circle toast-icon success"></i>
+                <div class="toast-content">
+                    <h6 class="toast-title">Success!</h6>
+                    <p class="toast-message">{{ session('success') }}</p>
+                </div>
+                <button class="toast-close" onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="toast-custom error" id="errorToast">
+                <i class="fas fa-times-circle toast-icon error"></i>
+                <div class="toast-content">
+                    <h6 class="toast-title">Error</h6>
+                    <p class="toast-message">{{ session('error') }}</p>
+                </div>
+                <button class="toast-close" onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        @endif
+    </div>
+
 <section class="login-section">
   <div class="container">
     <div class="row justify-content-center">
@@ -631,6 +659,13 @@
       toggle.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
     });
   })();
+</script>
+
+<script>
+    // Auto-remove toasts after 5 seconds
+    setTimeout(() => {
+        document.querySelectorAll('.toast-custom').forEach(t => t.remove());
+    }, 5000);
 </script>
 @endpush
 

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('review_text');
-            $table->string('image_path');
             $table->string('location');
             $table->timestamps();
         });

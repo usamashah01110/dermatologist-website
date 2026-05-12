@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\PatientRegisterController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DiseaseController;
 use App\Http\Controllers\DermatologistController;
@@ -41,6 +43,20 @@ Route::get('/dermatologist/detail/{id}', [DermatologistController::class, 'detai
 Route::post('/store/dermatologist', [DermatologistController::class, 'store'])->name('store.dermatologist');
 
 
+
+
+//Patient Routes
+Route::post('/store/patient',[PatientRegisterController::class, 'store'])->name('store.patient');
+
+
+// Appointment Routes
+
+Route::post('/appointments', [AppointmentController::class, 'store'])
+    ->name('appointments.store');
+
+Route::get('/appointments/check-availability', [AppointmentController::class, 'checkAvailability'])
+    ->name('appointments.check-availability');
+
 Route::middleware('auth')->group(function () {
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -57,7 +73,7 @@ Route::middleware('auth')->group(function () {
     // Review Routes
     Route::get('/review/index', [ReviewController::class, 'index'])->name('review.index');
     Route::get('/review/create', [ReviewController::class, 'create'])->name('review.create');
-    Route::post('/review/store', [ReviewController::class, 'store'])->name('review.store');
+    Route::post('/review/store/{id}', [ReviewController::class, 'store'])->name('review.store');
     Route::delete('/review/destroy/{id}', [ReviewController::class, 'destroy'])->name('review.destroy');
     Route::get('/review/edit/{id}', [ReviewController::class, 'edit'])->name('review.edit');
     Route::put('/review/update/{id}', [ReviewController::class, 'update'])->name('review.update');

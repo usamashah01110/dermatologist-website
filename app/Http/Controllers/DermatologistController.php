@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dermatologist;
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -27,8 +28,8 @@ class DermatologistController extends Controller
     public function detailDermatologist($id)
     {
         $doctor = Dermatologist::with('user')->where('status', 'approved')->where('id', $id)->first();
-
-        return view('dermatologistdetailpage', compact('doctor'));
+        $userReview = Review::where('dermatologist_id', $id)->get();
+        return view('dermatologistdetailpage', compact('doctor','userReview'));
 
     }
         public function edit($id)

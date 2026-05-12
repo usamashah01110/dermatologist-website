@@ -51,4 +51,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Dermatologist::class);
     }
+
+    public function patient()
+    {
+        return $this->hasOne(Patient::class);
+    }
 }

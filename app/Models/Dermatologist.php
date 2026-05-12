@@ -31,4 +31,25 @@ class Dermatologist extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+// ⭐ Bonus: Average rating attribute
+    public function getAverageRatingAttribute()
+    {
+        return $this->reviews()->approved()->avg('rating') ?? 0;
+    }
+
+    public function getTotalReviewsAttribute()
+    {
+        return $this->reviews()->approved()->count();
+    }
 }

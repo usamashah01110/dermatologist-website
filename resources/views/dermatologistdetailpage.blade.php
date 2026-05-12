@@ -1,380 +1,24 @@
 @extends('includes.main')
 
 @section('content')
+    {{-- ===== TOAST NOTIFICATIONS ===== --}}
+    <div class="toast-container-custom" style="position:fixed; top:20px; right:20px; z-index:9999;">
+        @if(session('success'))
+            <div class="toast-custom" style="background:#fff; border-left:4px solid #10b981; padding:14px 18px; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.12); margin-bottom:10px;">
+                <i class="fas fa-check-circle" style="color:#10b981;"></i>
+                {{ session('success') }}
+            </div>
+        @endif
 
-    <style>
-        .doctor-hero {
-            position: relative;
-            padding: 70px 0 50px;
-            background: linear-gradient(135deg, var(--soft-blue) 0%, var(--off-white) 100%);
-            overflow: hidden;
-        }
+        @if(session('error'))
+            <div class="toast-custom" style="background:#fff; border-left:4px solid #ef4444; padding:14px 18px; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.12); margin-bottom:10px;">
+                <i class="fas fa-times-circle" style="color:#ef4444;"></i>
+                {{ session('error') }}
+            </div>
+        @endif
+    </div>
 
-        .doctor-hero::before {
-            content: '';
-            position: absolute;
-            top: -120px; right: -120px;
-            width: 420px; height: 420px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(66,165,245,0.18), transparent 70%);
-            z-index: 1;
-        }
-
-        .breadcrumb-nav {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-            font-size: 0.9rem;
-            margin-bottom: 28px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .breadcrumb-nav a {
-            color: var(--text-mid);
-            text-decoration: none;
-            transition: color .2s;
-        }
-
-        .breadcrumb-nav a:hover { color: var(--primary); }
-        .breadcrumb-nav .separator { color: var(--text-light); }
-        .breadcrumb-nav .current { color: var(--primary); font-weight: 600; }
-
-        .doctor-profile-card {
-            background: var(--white);
-            border-radius: 28px;
-            padding: 40px;
-            border: 1px solid var(--border);
-            box-shadow: 0 30px 80px rgba(21,101,192,.08);
-            position: relative;
-            z-index: 2;
-        }
-
-        .doctor-profile-image {
-            width: 100%;
-            max-width: 260px;
-            aspect-ratio: 1;
-            border-radius: 24px;
-            object-fit: cover;
-            box-shadow: 0 20px 50px rgba(21,101,192,.18);
-            border: 5px solid var(--white);
-        }
-
-        .doctor-status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(39, 174, 96, 0.12);
-            color: #1e8449;
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-size: 0.82rem;
-            font-weight: 600;
-            margin-bottom: 14px;
-        }
-
-        .doctor-status-badge .dot {
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            background: #27ae60;
-            animation: pulse-dot 2s infinite;
-        }
-
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.3); }
-        }
-
-        .doctor-profile-name {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.9rem, 3.8vw, 2.6rem);
-            color: var(--text-dark);
-            margin-bottom: 8px;
-            line-height: 1.15;
-        }
-
-        .doctor-profile-specialty {
-            font-size: 1.05rem;
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 22px;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .doctor-profile-stats {
-            display: flex;
-            gap: 28px;
-            flex-wrap: wrap;
-            padding: 22px 0;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            margin: 22px 0 26px;
-        }
-
-        .stat-block {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .stat-block .icon {
-            width: 46px; height: 46px;
-            border-radius: 14px;
-            background: var(--soft-blue);
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            flex-shrink: 0;
-        }
-
-        .stat-block .label {
-            font-size: 0.72rem;
-            color: var(--text-light);
-            text-transform: uppercase;
-            letter-spacing: 0.7px;
-            margin-bottom: 2px;
-        }
-
-        .stat-block .value {
-            font-size: 0.98rem;
-            color: var(--text-dark);
-            font-weight: 600;
-        }
-
-        .info-section { padding: 80px 0; background: var(--white); }
-
-        .info-card {
-            background: var(--white);
-            border-radius: 20px;
-            border: 1px solid var(--border);
-            padding: 32px;
-            margin-bottom: 24px;
-            transition: all .3s;
-        }
-
-        .info-card:hover {
-            box-shadow: 0 20px 50px rgba(21,101,192,.08);
-            border-color: var(--accent-blue);
-        }
-
-        .info-card-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.35rem;
-            color: var(--text-dark);
-            margin-bottom: 18px;
-        }
-
-        .info-card-title i {
-            width: 42px; height: 42px;
-            border-radius: 12px;
-            background: var(--soft-blue);
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.95rem;
-        }
-
-        .info-card p { color: var(--text-mid); line-height: 1.8; font-size: 0.95rem; }
-
-        .qualification-list { list-style: none; padding: 0; margin: 0; }
-
-        .qualification-list li {
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            padding: 14px 0;
-            border-bottom: 1px dashed var(--border);
-            color: var(--text-mid);
-        }
-
-        .qualification-list li:last-child { border-bottom: none; }
-        .qualification-list li i { color: var(--primary); margin-top: 4px; flex-shrink: 0; }
-
-        .service-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 0;
-            color: var(--text-mid);
-            font-size: 0.92rem;
-        }
-
-        .service-item i {
-            color: var(--primary);
-            background: var(--soft-blue);
-            width: 26px; height: 26px;
-            border-radius: 8px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-        }
-
-        .booking-sidebar { position: sticky; top: 100px; }
-
-        .booking-cta-card {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent-blue) 100%);
-            color: #fff;
-            border-radius: 24px;
-            padding: 36px 30px;
-            box-shadow: 0 25px 60px rgba(21,101,192,.28);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .booking-cta-card::before {
-            content: '';
-            position: absolute;
-            top: -60px; right: -60px;
-            width: 200px; height: 200px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-        }
-
-        .booking-cta-card::after {
-            content: '';
-            position: absolute;
-            bottom: -90px; left: -50px;
-            width: 220px; height: 220px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.07);
-        }
-
-        .booking-cta-content { position: relative; z-index: 2; }
-
-        .booking-cta-card h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
-            color: #fff;
-            margin-bottom: 12px;
-        }
-
-        .booking-cta-card p {
-            color: rgba(255,255,255,0.92);
-            font-size: 0.92rem;
-            line-height: 1.7;
-            margin-bottom: 24px;
-        }
-
-        .btn-book-appointment {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            background: #fff;
-            color: var(--primary);
-            padding: 16px 28px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1rem;
-            transition: all .3s;
-            margin-bottom: 14px;
-        }
-
-        .btn-book-appointment:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 14px 30px rgba(0,0,0,.18);
-            color: var(--primary-dark);
-        }
-
-        .btn-secondary-action {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            background: rgba(255,255,255,0.18);
-            color: #fff;
-            padding: 14px 28px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.92rem;
-            transition: all .3s;
-            border: 1px solid rgba(255,255,255,0.35);
-        }
-
-        .btn-secondary-action:hover {
-            background: rgba(255,255,255,0.28);
-            color: #fff;
-        }
-
-        .clinic-info-card {
-            background: var(--white);
-            border-radius: 20px;
-            padding: 28px;
-            border: 1px solid var(--border);
-            margin-top: 24px;
-        }
-
-        .clinic-info-card h4 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
-            color: var(--text-dark);
-            margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .clinic-info-card h4 i { color: var(--primary); }
-
-        .clinic-info-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            padding: 14px 0;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.9rem;
-        }
-
-        .clinic-info-item:last-child { border-bottom: none; padding-bottom: 0; }
-
-        .clinic-info-item .icon-wrap {
-            width: 36px; height: 36px;
-            border-radius: 10px;
-            background: var(--soft-blue);
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .clinic-info-item .label {
-            font-size: 0.72rem;
-            color: var(--text-light);
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-            margin-bottom: 3px;
-        }
-
-        .clinic-info-item .value { font-weight: 500; color: var(--text-dark); }
-
-        @media (max-width: 991px) {
-            .booking-sidebar { position: static; margin-top: 30px; }
-            .doctor-profile-card { padding: 28px; }
-            .doctor-profile-image { max-width: 200px; }
-        }
-
-        @media (max-width: 576px) {
-            .doctor-profile-stats { gap: 18px; }
-            .doctor-hero { padding: 40px 0 30px; }
-            .doctor-profile-card { padding: 22px; }
-        }
-    </style>
-
+    {{-- ===== DOCTOR HERO ===== --}}
     <section class="doctor-hero">
         <div class="container">
             <nav class="breadcrumb-nav">
@@ -453,6 +97,7 @@
         </div>
     </section>
 
+    {{-- ===== INFO SECTION ===== --}}
     <section class="info-section">
         <div class="container">
             <div class="row g-4">
@@ -582,4 +227,222 @@
         </div>
     </section>
 
+    {{-- ===== ⭐ CUSTOMER REVIEWS SECTION ===== --}}
+    <section class="reviews-section">
+        <div class="container">
+            <div class="reviews-header">
+                <span class="reviews-badge">
+                    <i class="fas fa-heart"></i> Patient Stories
+                </span>
+                <h2 class="reviews-title">
+                    What Patients Say About {{ $doctor->user->name }}
+                </h2>
+                <p class="reviews-subtitle">
+                    Real experiences from real patients who trusted {{ $doctor->user->name }} with their skin health journey.
+                </p>
+
+                {{-- ⭐ Average rating summary --}}
+                @if(isset($reviews) && $reviews->count() > 0)
+                    @php
+                        $avgRating = $reviews->avg('rating') ?? 5;
+                        $totalReviews = $reviews->count();
+                    @endphp
+                    <div class="doctor-rating-summary">
+                        <div class="rating-stars">
+                            @for($i = 1; $i <= 5; $i++)
+                                <i class="fas fa-star {{ $i <= round($avgRating) ? 'active' : '' }}"></i>
+                            @endfor
+                        </div>
+                        <span class="rating-value">{{ number_format($avgRating, 1) }}</span>
+                        <span class="rating-count">({{ $totalReviews }} {{ $totalReviews == 1 ? 'review' : 'reviews' }})</span>
+                    </div>
+                @endif
+            </div>
+
+            {{-- ===== ⭐ WRITE A REVIEW BUTTON / FORM ===== --}}
+            @auth
+
+                <div class="write-review-wrapper">
+
+                        <button type="button" class="btn-write-review" onclick="toggleReviewForm()">
+                            <i class="fas fa-pen-to-square"></i>
+                            Write a Review
+                        </button>
+
+                        <div class="review-form-container" id="reviewFormContainer" style="display: none;">
+                            <div class="review-form-card">
+                                <button type="button" class="close-review-form" onclick="toggleReviewForm()">
+                                    <i class="fas fa-times"></i>
+                                </button>
+
+                                <h3 class="review-form-title">
+                                    <i class="fas fa-comment-medical"></i>
+                                    Share Your Experience
+                                </h3>
+                                <p class="review-form-subtitle">
+                                    Help others by sharing your honest experience with {{ $doctor->user->name }}.
+                                </p>
+
+                                <form action="{{ route('review.store', $doctor->id ) }}" method="POST">
+                                    @csrf
+
+                                    {{-- Star Rating --}}
+                                    <div class="review-form-group">
+                                        <label class="review-form-label">Your Rating <span style="color:#dc3545">*</span></label>
+                                        <div class="star-rating-input">
+                                            @for($i = 5; $i >= 1; $i--)
+                                                <input type="radio"
+                                                       id="star{{ $i }}"
+                                                       name="rating"
+                                                       value="{{ $i }}"
+                                                       {{ old('rating') == $i ? 'checked' : '' }}
+                                                       required>
+                                                <label for="star{{ $i }}" title="{{ $i }} star{{ $i > 1 ? 's' : '' }}">
+                                                    <i class="fas fa-star"></i>
+                                                </label>
+                                            @endfor
+                                        </div>
+                                        @error('rating')
+                                        <small style="color:#dc3545; display:block; margin-top:6px;">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+
+                                    {{-- Review Text --}}
+                                    <div class="review-form-group">
+                                        <label class="review-form-label">Your Review <span style="color:#dc3545">*</span></label>
+                                        <textarea name="review_text"
+                                                  class="review-form-textarea"
+                                                  rows="5"
+                                                  placeholder="Share your experience — what went well, how the doctor treated you, treatment results, etc."
+                                                  minlength="10"
+                                                  maxlength="1000"
+                                                  required>{{ old('review_text') }}</textarea>
+                                        <small class="char-counter">
+                                            <span id="charCount">0</span> / 1000 characters (min 10)
+                                        </small>
+                                        @error('review_text')
+                                        <small style="color:#dc3545; display:block; margin-top:6px;">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+
+                                    {{-- Submit --}}
+                                    <div class="review-form-actions">
+                                        <button type="submit" class="btn-submit-review">
+                                            <i class="fas fa-paper-plane"></i>
+                                            Submit Review
+                                        </button>
+                                        <button type="button" class="btn-cancel-review" onclick="toggleReviewForm()">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                </div>
+            @else
+                <div class="write-review-wrapper">
+                    <div class="login-to-review-notice">
+                        <i class="fas fa-lock"></i>
+                        <div>
+                            <strong>Want to share your experience?</strong>
+                            <p>
+                                <a href="{{ route('login') }}" style="color: var(--primary); font-weight: 600;">Login</a>
+                                or
+                                <a href="{{ route('register.patient') }}" style="color: var(--primary); font-weight: 600;">Register</a>
+                                to write a review for {{ $doctor->user->name }}.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            @endauth
+
+            {{-- ===== EXISTING REVIEWS DISPLAY ===== --}}
+            @if(isset($userReview) && $userReview->count() > 0)
+                <div class="row g-4">
+                    @foreach($userReview as $review)
+                        <div class="col-md-6 col-lg-4">
+                            <div class="review-card">
+                                <div class="review-quote-icon">
+                                    <i class="fas fa-quote-left"></i>
+                                </div>
+
+                                <div class="review-rating">
+                                    @for($i = 1; $i <= 5; $i++)
+                                        <i class="fas fa-star {{ $i <= ($review->rating ?? 5) ? '' : 'inactive' }}"></i>
+                                    @endfor
+                                </div>
+
+                                <p class="review-text">{{ $review->review_text }}</p>
+
+                                <div class="reviewer-info">
+                                    <img src="{{ $review->image_path ? asset('storage/' . $review->image_path) : 'https://ui-avatars.com/api/?name=' . urlencode($review->name) . '&background=1565C0&color=fff' }}"
+                                         alt="{{ $review->name }}"
+                                         class="reviewer-image"
+                                         onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($review->name) }}&background=1565C0&color=fff'" />
+                                    <div>
+                                        <h5 class="reviewer-name">{{ $review->name }}</h5>
+                                        <span class="reviewer-location">
+                                            <i class="fas fa-map-marker-alt"></i> {{ $review->location }}
+                                        </span>
+                                    </div>
+                                    <div class="verified-badge" title="Verified Patient">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="no-reviews">
+                    <i class="fas fa-comment-medical"></i>
+                    <h4>No Reviews Yet</h4>
+                    <p>Be the first patient to share your experience with {{ $doctor->user->name }} after your consultation.</p>
+                </div>
+            @endif
+        </div>
+    </section>
+
+    <script>
+        // Auto-dismiss toast notifications
+        setTimeout(() => {
+            document.querySelectorAll('.toast-custom').forEach(t => t.remove());
+        }, 5000);
+
+        // Toggle review form
+        function toggleReviewForm() {
+            const container = document.getElementById('reviewFormContainer');
+            if (container) {
+                if (container.style.display === 'none' || !container.style.display) {
+                    container.style.display = 'block';
+                    container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    container.style.display = 'none';
+                }
+            }
+        }
+
+        // Character counter
+        document.addEventListener('DOMContentLoaded', function() {
+            const textarea = document.querySelector('.review-form-textarea');
+            const counter = document.getElementById('charCount');
+
+            if (textarea && counter) {
+                textarea.addEventListener('input', function() {
+                    counter.textContent = this.value.length;
+                    counter.style.color = this.value.length < 10 ? '#dc3545' : '#27ae60';
+                });
+
+                if (textarea.value) {
+                    counter.textContent = textarea.value.length;
+                }
+            }
+
+            // Auto-open form on validation errors
+            @if($errors->any())
+            toggleReviewForm();
+            @endif
+        });
+    </script>
 @endsection
