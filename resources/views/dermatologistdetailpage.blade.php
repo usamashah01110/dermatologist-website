@@ -349,7 +349,7 @@
                             <p>
                                 <a href="{{ route('login') }}" style="color: var(--primary); font-weight: 600;">Login</a>
                                 or
-                                <a href="{{ route('register.patient') }}" style="color: var(--primary); font-weight: 600;">Register</a>
+                                <a href="{{ route('register') }}" style="color: var(--primary); font-weight: 600;">Register</a>
                                 to write a review for {{ $doctor->user->name }}.
                             </p>
                         </div>
