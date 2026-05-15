@@ -27,7 +27,7 @@
     <div class="featured-card">
       <div class="featured-row">
         <div class="featured-media">
-          <img src="{{ asset( $featured->image_path) }}"
+          <img src="{{ asset( $featured) }}"
                alt="HydraFacial treatment"
                loading="lazy"
                style="height: 200px; object-fit: cover; width: 100%;">

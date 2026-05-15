@@ -78,7 +78,7 @@
                         {{-- AJAX response alert --}}
                         <div id="formAlert" class="alert" style="display:none;"></div>
 
-                        <form action="{{ route('store.dermatologist') }}" method="POST" enctype="multipart/form-data" id="dermatologistRegisterForm">
+                        <form action="" method="POST" enctype="multipart/form-data" id="dermatologistRegisterForm">
                             @csrf
 
                             <!-- ── Section 1: Account Information ─── -->
