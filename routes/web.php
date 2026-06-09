@@ -14,6 +14,9 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PatientController;
+use App\Http\Controllers\AdminProfileController;
+use App\Http\Controllers\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,9 +35,7 @@ Route::get('/booking', [MainController::class, 'booking'])->name('booking.page')
 
 Route::get('/skincare', [SkincareController::class, 'index'])->name('skincare.page');
 
-Route::get('/dashboard', function () {
-    return view('admin.dashboard');
-})->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 
 //Dermatologist Routes
@@ -62,6 +63,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Admin-panel: appointments (role-scoped inside the controller)
+    Route::get('/appointments/list', [AppointmentController::class, 'index'])->name('appointments.index');
+    Route::patch('/appointments/{appointment}/status', [AppointmentController::class, 'updateStatus'])
+        ->name('appointments.updateStatus');
+
+    // Admin-panel: patients (superadmin + dermatologist)
+    Route::get('/admin/patients', [PatientController::class, 'index'])->name('patients.index');
+
+    // Admin-panel: unified profile page (all roles)
+    Route::get('/admin/profile', [AdminProfileController::class, 'edit'])->name('admin.profile.edit');
+    Route::put('/admin/profile', [AdminProfileController::class, 'update'])->name('admin.profile.update');
      // Disease Routes
     Route::get('/disease/index', [DiseaseController::class, 'index'])->name('disease.index');
     Route::get('/disease/create', [DiseaseController::class, 'create'])->name('disease.create');

@@ -56,8 +56,8 @@
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
-                                    <h6 class="mb-0">John Doe</h6>
-                                    <small class="text-body-secondary">Admin</small>
+                                    <h6 class="mb-0">{{ auth()->user()->name }}</h6>
+                                    <small class="text-body-secondary">{{ ucfirst(optional(auth()->user()->roles->first())->name ?? 'User') }}</small>
                                 </div>
                             </div>
                         </a>
@@ -66,22 +66,13 @@
                         <div class="dropdown-divider my-1"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="{{ route('admin.profile.edit') }}">
                             <i class="icon-base bx bx-user icon-md me-3"></i><span>My Profile</span>
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#">
-                            <i class="icon-base bx bx-cog icon-md me-3"></i><span>Settings</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="#">
-                        <span class="d-flex align-items-center align-middle">
-                          <i class="flex-shrink-0 icon-base bx bx-credit-card icon-md me-3"></i
-                          ><span class="flex-grow-1 align-middle">Billing Plan</span>
-                          <span class="flex-shrink-0 badge rounded-pill bg-danger">4</span>
-                        </span>
+                        <a class="dropdown-item" href="{{ route('appointments.index') }}">
+                            <i class="icon-base bx bx-calendar-check icon-md me-3"></i><span>Appointments</span>
                         </a>
                     </li>
                     <li>

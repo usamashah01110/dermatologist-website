@@ -84,17 +84,31 @@
               @endif
 
 
+            {{-- Appointments — visible to admin, doctor and patient --}}
+            @if(auth()->user()->hasAnyRole(['superadmin', 'dermatologist', 'patient']))
             <li class="menu-item ">
-            <a href="{{ route('dermatologist.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-smile"></i>
+            <a href="{{ route('appointments.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-calendar-check"></i>
                 Appointments
             </a>
              </li>
+            @endif
 
+            {{-- Patients — visible to admin and doctor only --}}
+            @if(auth()->user()->hasAnyRole(['superadmin', 'dermatologist']))
              <li class="menu-item ">
-            <a href="{{ route('dermatologist.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-smile"></i>
+            <a href="{{ route('patients.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-group"></i>
                 Patients
+            </a>
+             </li>
+            @endif
+
+            {{-- My Profile — everyone --}}
+            <li class="menu-item ">
+            <a href="{{ route('admin.profile.edit') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                My Profile
             </a>
              </li>
     </ul>

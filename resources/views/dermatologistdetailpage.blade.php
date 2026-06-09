@@ -87,7 +87,7 @@
                             </div>
                         </div>
 
-                        <a href="{{ route('booking.page', ['doctor' => $doctor->user->name]) }}" class="btn-doctor">
+                        <a href="{{ route('booking.page', ['doctor' => $doctor->id]) }}" class="btn-doctor">
                             <i class="fas fa-calendar-check"></i>
                             Book an Appointment
                         </a>
@@ -169,7 +169,7 @@
                                 <h3>Ready to Book?</h3>
                                 <p>Schedule a consultation with {{ $doctor->user->name }} and take the next step in your skin journey.</p>
 
-                                <a href="{{ route('booking.page', ['doctor' => $doctor->user->name]) }}" class="btn-book-appointment">
+                                <a href="{{ route('booking.page', ['doctor' => $doctor->id]) }}" class="btn-book-appointment">
                                     <i class="fas fa-calendar-check"></i>
                                     Book Appointment
                                 </a>
