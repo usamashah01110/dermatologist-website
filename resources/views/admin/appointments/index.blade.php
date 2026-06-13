@@ -76,6 +76,7 @@
                         <th>Time</th>
                         <th>Type</th>
                         <th>Concern</th>
+                        <th>Images</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
@@ -103,6 +104,16 @@
                             <td>{{ \Carbon\Carbon::parse($appointment->appointment_time)->format('h:i A') }}</td>
                             <td>{{ ucfirst(str_replace('_', ' ', $appointment->appointment_type)) }}</td>
                             <td>{{ $appointment->concern_category ? ucfirst($appointment->concern_category) : '—' }}</td>
+                            <td>
+                                @forelse($appointment->images as $image)
+                                    <a href="{{ asset('storage/' . $image->image_path) }}" target="_blank" title="View image">
+                                        <img src="{{ asset('storage/' . $image->image_path) }}" alt="Concern image"
+                                             class="rounded me-1 mb-1" style="width: 38px; height: 38px; object-fit: cover;">
+                                    </a>
+                                @empty
+                                    <span class="text-muted">—</span>
+                                @endforelse
+                            </td>
                             <td><span class="badge {{ $badge }}">{{ ucfirst($appointment->status) }}</span></td>
                             <td>
                                 <div class="dropdown">
@@ -140,7 +151,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="9" class="text-center text-muted py-4">No appointments found.</td>
+                            <td colspan="10" class="text-center text-muted py-4">No appointments found.</td>
                         </tr>
                     @endforelse
                 </tbody>

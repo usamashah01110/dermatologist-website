@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use App\Models\AppointmentImage;
 use App\Models\Dermatologist;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -36,7 +37,7 @@ class AppointmentController extends Controller
         $user = $request->user();
         $date = $request->input('date');
 
-        $query = Appointment::with(['patient.user', 'dermatologist.user'])
+        $query = Appointment::with(['patient.user', 'dermatologist.user', 'images'])
             ->orderBy('appointment_date', 'desc')
             ->orderBy('appointment_time', 'asc');
 
@@ -111,6 +112,8 @@ class AppointmentController extends Controller
             'appointment_time'  => ['required', 'date_format:H:i'],
             'concern_category'  => ['nullable', 'string', 'max:100'],
             'notes'             => ['nullable', 'string', 'max:2000'],
+            'images'            => ['nullable', 'array', 'max:5'],
+            'images.*'          => ['image', 'mimes:png,jpg,jpeg', 'max:2048'],
         ]);
 
         $patient = Auth::user()->patient;
@@ -166,7 +169,7 @@ class AppointmentController extends Controller
                     ->with('error', 'This time slot is already booked. Please pick a different time.');
             }
 
-            Appointment::create([
+            $appointment = Appointment::create([
                 'patient_id'        => $patient->id,
                 'dermatologist_id'  => $validated['dermatologist_id'],
                 'patient_name'      => $validated['patient_name'],
@@ -181,6 +184,18 @@ class AppointmentController extends Controller
                 'notes'             => $validated['notes'] ?? null,
                 'status'            => 'pending',
             ]);
+
+            // Store any uploaded concern images in the appointment_images table.
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $image) {
+                    $path = $image->store('appointment_images', 'public');
+
+                    AppointmentImage::create([
+                        'appointment_id' => $appointment->id,
+                        'image_path'     => $path,
+                    ]);
+                }
+            }
 
             DB::commit();
         } catch (\Throwable $e) {

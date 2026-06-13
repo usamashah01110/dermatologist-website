@@ -445,7 +445,7 @@
                                     </div>
                                 @endif
 
-                                <form id="appointmentForm" action="{{ route('appointments.store') }}" method="POST" novalidate>
+                                <form id="appointmentForm" action="{{ route('appointments.store') }}" method="POST" enctype="multipart/form-data" novalidate>
                                     @csrf
                                     <input type="hidden" name="dermatologist_id" value="{{ old('dermatologist_id', $selectedDoctor->dermatologist->id ?? '') }}">
 
@@ -662,6 +662,28 @@
                                         </div>
                                         @enderror
 
+                                        {{-- ====== CONCERN IMAGES UPLOAD ====== --}}
+                                        <div class="mt-3">
+                                            <label class="form-label-bk">Upload photos of your concern (optional)</label>
+                                            <input type="file" name="images[]" id="appointmentImages"
+                                                   class="form-control-bk no-icon @error('images') is-invalid @enderror @error('images.*') is-invalid @enderror"
+                                                   accept="image/png,image/jpg,image/jpeg" multiple>
+                                            <small class="text-muted d-block mt-1">
+                                                You can attach up to 5 images (JPG / PNG, max 2&nbsp;MB each) to help the doctor assess your condition.
+                                            </small>
+                                            <div id="imagePreview" class="d-flex flex-wrap gap-2 mt-2"></div>
+                                            @error('images')
+                                            <div class="input-error-bk">
+                                                <i class="fas fa-circle-exclamation"></i> {{ $message }}
+                                            </div>
+                                            @enderror
+                                            @error('images.*')
+                                            <div class="input-error-bk">
+                                                <i class="fas fa-circle-exclamation"></i> {{ $message }}
+                                            </div>
+                                            @enderror
+                                        </div>
+
                                         <div class="form-note">
                                             <i class="fas fa-lock"></i>
                                             <strong>Privacy notice:</strong> Your information is encrypted and shared only with the consulting dermatologist.
@@ -694,6 +716,36 @@
             setTimeout(() => {
                 document.querySelectorAll('.toast-custom').forEach(t => t.remove());
             }, 5000);
+        </script>
+
+        <script>
+            // Concern images: live thumbnail preview + max 5 files guard.
+            (function () {
+                const input   = document.getElementById('appointmentImages');
+                const preview = document.getElementById('imagePreview');
+                if (!input || !preview) return;
+
+                input.addEventListener('change', function () {
+                    preview.innerHTML = '';
+
+                    if (input.files.length > 5) {
+                        alert('You can upload a maximum of 5 images. Only the first 5 will be used.');
+                    }
+
+                    Array.from(input.files).slice(0, 5).forEach(function (file) {
+                        if (!file.type.startsWith('image/')) return;
+                        const img = document.createElement('img');
+                        img.src = URL.createObjectURL(file);
+                        img.style.width = '70px';
+                        img.style.height = '70px';
+                        img.style.objectFit = 'cover';
+                        img.style.borderRadius = '8px';
+                        img.style.border = '1px solid #e5e7eb';
+                        img.onload = function () { URL.revokeObjectURL(img.src); };
+                        preview.appendChild(img);
+                    });
+                });
+            })();
         </script>
 
         <script>

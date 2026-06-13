@@ -40,4 +40,9 @@ class Appointment extends Model
     {
         return $this->belongsTo(Dermatologist::class);
     }
+
+    public function images()
+    {
+        return $this->hasMany(AppointmentImage::class);
+    }
 }
