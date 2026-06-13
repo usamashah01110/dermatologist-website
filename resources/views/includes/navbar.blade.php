@@ -19,11 +19,11 @@
     </a>
         </li>
 
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('contact.page') ? 'active' : '' }}" href="{{ route('contact.page') }}">
                 <i class="fas fa-envelope me-1"></i>Contact Us
             </a>
-        </li>
+        </li> -->
 
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('dermatologists.page') ? 'active' : '' }}" href="{{ route('dermatologists.page') }}">
