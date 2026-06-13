@@ -341,22 +341,7 @@
         @media (max-width: 575px) { .pill-option { min-width: 100%; } }
     </style>
 
-    {{-- ===== TOAST NOTIFICATIONS ===== --}}
-    <div class="toast-container-custom" style="position:fixed; top:20px; right:20px; z-index:9999;">
-        @if(session('success'))
-            <div class="toast-custom" style="background:#fff; border-left:4px solid #10b981; padding:14px 18px; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.12); margin-bottom:10px;">
-                <i class="fas fa-check-circle" style="color:#10b981;"></i>
-                {{ session('success') }}
-            </div>
-        @endif
-
-        @if(session('error'))
-            <div class="toast-custom" style="background:#fff; border-left:4px solid #ef4444; padding:14px 18px; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.12); margin-bottom:10px;">
-                <i class="fas fa-times-circle" style="color:#ef4444;"></i>
-                {{ session('error') }}
-            </div>
-        @endif
-    </div>
+    {{-- Toast notifications are rendered globally from includes/header.blade.php --}}
 
     {{-- ===== HERO ===== --}}
     <section class="hero">

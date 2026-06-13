@@ -133,6 +133,8 @@ Route::middleware('auth')->group(function () {
 
             // route of index page
     Route::get('/register/dermatologist/index', [DermatologistController::class, 'adminindex'])->name('dermatologist.index');
+    Route::get('/admin/dermatologist/create', [DermatologistController::class, 'create'])->name('dermatologist.create');
+    Route::post('/admin/dermatologist/store', [DermatologistController::class, 'adminStore'])->name('dermatologist.store');
     Route::get('/dermatologist/edit/{id}', [DermatologistController::class, 'edit'])->name('dermatologist.edit');
     Route::post('/dermatologist/update/{id}', [DermatologistController::class, 'update'])->name('dermatologist.update');
     Route::delete('/dermatologist/destroy/{id}', [DermatologistController::class, 'destroy'])->name('dermatologist.destroy');

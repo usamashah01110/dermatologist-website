@@ -25,6 +25,71 @@ class DermatologistController extends Controller
        return view('registerdematologist');
     }
 
+    /**
+     * Admin: show the form to create a new dermatologist.
+     */
+    public function create()
+    {
+        return view('admin.dermatologist.create');
+    }
+
+    /**
+     * Admin: store a new dermatologist (user + dermatologist profile).
+     */
+    public function adminStore(Request $request)
+    {
+        $validated = $request->validate([
+            'name'                 => ['required', 'string', 'max:255'],
+            'email'                => ['required', 'email', 'max:255', 'unique:users,email'],
+            'password'             => ['required', 'string', 'min:8', 'confirmed'],
+            'qualification'        => ['required', 'string', 'max:255'],
+            'experience_year'      => ['required', 'string'],
+            'specialization'       => ['required', 'string'],
+            'phone_number'         => ['required', 'string', 'max:30'],
+            'clinic_address'       => ['required', 'string', 'max:500'],
+            'city'                 => ['required', 'string'],
+            'availability_days'    => ['required', 'array', 'min:1'],
+            'availability_days.*'  => ['string'],
+            'profile_image'        => ['required', 'image', 'mimes:png,jpg,jpeg', 'max:2048'],
+            'status'               => ['required', 'in:pending,approved,rejected'],
+        ]);
+
+        try {
+            $imagePath = $request->file('profile_image')->store('dermatologists', 'public');
+
+            DB::transaction(function () use ($validated, $imagePath) {
+                $user = User::create([
+                    'name'     => $validated['name'],
+                    'email'    => $validated['email'],
+                    'password' => Hash::make($validated['password']),
+                ]);
+
+                Dermatologist::create([
+                    'user_id'           => $user->id,
+                    'qualification'     => $validated['qualification'],
+                    'experience_year'   => $validated['experience_year'],
+                    'specialization'    => $validated['specialization'],
+                    'phone_number'      => $validated['phone_number'],
+                    'clinic_address'    => $validated['clinic_address'],
+                    'city'              => $validated['city'],
+                    'availability_days' => $validated['availability_days'],
+                    'profile_image'     => $imagePath,
+                    'status'            => $validated['status'],
+                ]);
+
+                $user->assignRole('dermatologist');
+            });
+
+            return redirect()->route('dermatologist.index')
+                ->with('success', 'Dermatologist created successfully.');
+        } catch (\Exception $e) {
+            Log::error('Admin Dermatologist Create Error: ' . $e->getMessage());
+
+            return back()->withInput()
+                ->with('error', 'Something went wrong while creating the dermatologist. Please try again.');
+        }
+    }
+
     public function detailDermatologist($id)
     {
         $doctor = Dermatologist::with('user')->where('status', 'approved')->where('id', $id)->first();

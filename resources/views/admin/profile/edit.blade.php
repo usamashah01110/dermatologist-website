@@ -46,7 +46,7 @@
             <div class="card">
                 <h5 class="card-header">Edit Profile</h5>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('admin.profile.update') }}">
+                    <form method="POST" action="{{ route('admin.profile.update') }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
@@ -70,42 +70,116 @@
                             </div>
                         </div>
 
-                        {{-- Dermatologist fields --}}
-                        @if($user->hasRole('dermatologist') && $user->dermatologist)
-                            <h6 class="text-muted fw-semibold mb-3">Dermatologist Details</h6>
+                        {{-- Dermatologist fields (create when missing, edit when present) --}}
+                        @if($user->hasRole('dermatologist'))
+                            @php $derm = $user->dermatologist; @endphp
+
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <h6 class="text-muted fw-semibold mb-0">Dermatologist Details</h6>
+                                @if($derm)
+                                    @php
+                                        $statusBadge = ['pending' => 'bg-label-warning', 'approved' => 'bg-label-success', 'rejected' => 'bg-label-danger'][$derm->status] ?? 'bg-label-secondary';
+                                    @endphp
+                                    <span class="badge {{ $statusBadge }}">{{ ucfirst($derm->status) }}</span>
+                                @else
+                                    <span class="badge bg-label-secondary">Not submitted</span>
+                                @endif
+                            </div>
+
+                            @unless($derm)
+                                <div class="alert alert-info">
+                                    <i class="bx bx-info-circle me-1"></i>
+                                    Complete the fields below to create your professional profile. After an admin approves it,
+                                    you'll appear in the public dermatologist directory.
+                                </div>
+                            @endunless
+
+                            @php
+                                $experienceOptions   = ['0-1' => 'Less than 1 year', '1-3' => '1 – 3 years', '3-5' => '3 – 5 years', '5-10' => '5 – 10 years', '10-15' => '10 – 15 years', '15+' => '15+ years'];
+                                $specializationList  = ['General Dermatology', 'Cosmetic Dermatology', 'Pediatric Dermatology', 'Dermatopathology', 'Dermatologic Surgery', 'Trichology', 'Aesthetic Medicine'];
+                                $cityList            = ['Lahore', 'Karachi', 'Islamabad', 'Rawalpindi', 'Faisalabad', 'Multan', 'Peshawar', 'Quetta', 'Sialkot', 'Gujranwala', 'Hyderabad', 'Bahawalpur'];
+                                $allDays             = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+                                $selectedDays        = old('availability_days', (array) optional($derm)->availability_days);
+                                $curExperience       = old('experience_year', optional($derm)->experience_year);
+                                $curSpecialization   = old('specialization', optional($derm)->specialization);
+                                $curCity             = old('city', optional($derm)->city);
+                            @endphp
+
                             <div class="row g-3 mb-4">
                                 <div class="col-md-6">
-                                    <label class="form-label">Phone Number</label>
-                                    <input type="text" name="phone_number" class="form-control" value="{{ old('phone_number', $user->dermatologist->phone_number) }}">
+                                    <label class="form-label">Qualification <span class="text-danger">*</span></label>
+                                    <input type="text" name="qualification" class="form-control" placeholder="MBBS, FCPS (Dermatology)"
+                                           value="{{ old('qualification', optional($derm)->qualification) }}">
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label">Qualification</label>
-                                    <input type="text" name="qualification" class="form-control" value="{{ old('qualification', $user->dermatologist->qualification) }}">
+                                    <label class="form-label">Years of Experience <span class="text-danger">*</span></label>
+                                    <select name="experience_year" class="form-select">
+                                        <option value="">Select experience</option>
+                                        @foreach($experienceOptions as $val => $label)
+                                            <option value="{{ $val }}" {{ $curExperience === $val ? 'selected' : '' }}>{{ $label }}</option>
+                                        @endforeach
+                                        @if($curExperience && ! array_key_exists($curExperience, $experienceOptions))
+                                            {{-- keep a legacy/free-text value selectable --}}
+                                            <option value="{{ $curExperience }}" selected>{{ $curExperience }}</option>
+                                        @endif
+                                    </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label">Specialization</label>
-                                    <input type="text" name="specialization" class="form-control" value="{{ old('specialization', $user->dermatologist->specialization) }}">
+                                    <label class="form-label">Specialization <span class="text-danger">*</span></label>
+                                    <select name="specialization" class="form-select">
+                                        <option value="">Select specialization</option>
+                                        @foreach($specializationList as $spec)
+                                            <option value="{{ $spec }}" {{ $curSpecialization === $spec ? 'selected' : '' }}>{{ $spec }}</option>
+                                        @endforeach
+                                        @if($curSpecialization && ! in_array($curSpecialization, $specializationList))
+                                            <option value="{{ $curSpecialization }}" selected>{{ $curSpecialization }}</option>
+                                        @endif
+                                    </select>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label">Experience</label>
-                                    <input type="text" name="experience_year" class="form-control" value="{{ old('experience_year', $user->dermatologist->experience_year) }}">
+                                    <label class="form-label">Phone Number <span class="text-danger">*</span></label>
+                                    <input type="text" name="phone_number" class="form-control" placeholder="+92 300 1234567"
+                                           value="{{ old('phone_number', optional($derm)->phone_number) }}">
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label">Clinic Address</label>
-                                    <input type="text" name="clinic_address" class="form-control" value="{{ old('clinic_address', $user->dermatologist->clinic_address) }}">
+                                    <label class="form-label">Clinic Address <span class="text-danger">*</span></label>
+                                    <input type="text" name="clinic_address" class="form-control" placeholder="123 Main Boulevard, Gulberg"
+                                           value="{{ old('clinic_address', optional($derm)->clinic_address) }}">
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label">City</label>
-                                    <input type="text" name="city" class="form-control" value="{{ old('city', $user->dermatologist->city) }}">
+                                    <label class="form-label">City <span class="text-danger">*</span></label>
+                                    <select name="city" class="form-select">
+                                        <option value="">Select your city</option>
+                                        @foreach($cityList as $city)
+                                            <option value="{{ $city }}" {{ $curCity === $city ? 'selected' : '' }}>{{ $city }}</option>
+                                        @endforeach
+                                        @if($curCity && ! in_array($curCity, $cityList))
+                                            <option value="{{ $curCity }}" selected>{{ $curCity }}</option>
+                                        @endif
+                                    </select>
                                 </div>
                                 <div class="col-12">
-                                    <label class="form-label">Working Days</label>
-                                    <div>
-                                        @foreach((array) $user->dermatologist->availability_days as $day)
-                                            <span class="badge bg-label-success">{{ $day }}</span>
-                                        @endforeach
-                                    </div>
+                                    <label class="form-label d-block">Availability Days <span class="text-danger">*</span></label>
+                                    @foreach($allDays as $day)
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name="availability_days[]"
+                                                   id="day_{{ $day }}" value="{{ $day }}"
+                                                   {{ in_array($day, (array) $selectedDays) ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="day_{{ $day }}">{{ $day }}</label>
+                                        </div>
+                                    @endforeach
                                 </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Profile Photo {{ $derm ? '' : '(optional)' }}</label>
+                                    <input type="file" name="profile_image" class="form-control" accept="image/png,image/jpeg,image/jpg">
+                                    <small class="text-muted">PNG or JPG, max 2MB.</small>
+                                </div>
+                                @if($derm && $derm->profile_image)
+                                    <div class="col-md-6">
+                                        <label class="form-label d-block">Current Photo</label>
+                                        <img src="{{ asset('storage/' . $derm->profile_image) }}" alt="profile" class="rounded" style="width:64px;height:64px;object-fit:cover;">
+                                    </div>
+                                @endif
                             </div>
                         @endif
 

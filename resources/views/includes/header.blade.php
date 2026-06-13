@@ -86,3 +86,42 @@
 </head>
 
 <body>
+
+    {{-- ===== GLOBAL TOAST NOTIFICATIONS (shown on every page, e.g. after a booking redirect) ===== --}}
+    @if(session('success') || session('error'))
+        <div class="toast-container-custom" id="globalToastContainer">
+            @if(session('success'))
+                <div class="toast-custom success">
+                    <i class="fas fa-check-circle toast-icon success"></i>
+                    <div class="toast-content">
+                        <p class="toast-title">Success</p>
+                        <p class="toast-message">{{ session('success') }}</p>
+                    </div>
+                    <button type="button" class="toast-close" onclick="this.closest('.toast-custom').remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="toast-custom error">
+                    <i class="fas fa-times-circle toast-icon error"></i>
+                    <div class="toast-content">
+                        <p class="toast-title">Error</p>
+                        <p class="toast-message">{{ session('error') }}</p>
+                    </div>
+                    <button type="button" class="toast-close" onclick="this.closest('.toast-custom').remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            @endif
+        </div>
+
+        <script>
+            // Auto-remove the toasts after the fade-out animation finishes (~5s).
+            setTimeout(function () {
+                var c = document.getElementById('globalToastContainer');
+                if (c) { c.remove(); }
+            }, 5000);
+        </script>
+    @endif

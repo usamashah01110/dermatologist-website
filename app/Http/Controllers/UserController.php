@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dermatologist;
+use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -35,15 +40,88 @@ class UserController extends Controller
             'roles.*' => 'exists:roles,id',
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-        ]);
+        // Figure out which roles were selected so we know whether we also have to
+        // create a linked patient / dermatologist profile row.
+        $roles = $request->has('roles')
+            ? Role::whereIn('id', $request->roles)->get()
+            : collect();
+        $roleNames = $roles->pluck('name');
 
-        if ($request->has('roles')) {
-            $roles = Role::whereIn('id', $request->roles)->get();
+        $isPatient       = $roleNames->contains('patient');
+        $isDermatologist = $roleNames->contains('dermatologist');
+
+        // Conditionally validate the profile fields for the chosen role(s).
+        if ($isPatient) {
+            $request->validate([
+                'phone_number' => 'required|string|max:20',
+                'age'          => 'required|integer|min:1|max:120',
+                'gender'       => 'required|in:Male,Female,Other,Prefer not to say',
+                'address'      => 'nullable|string|max:1000',
+                'skin_type'    => 'nullable|in:Normal,Oily,Dry,Combination,Sensitive,Not sure',
+            ]);
+        }
+
+        if ($isDermatologist) {
+            $request->validate([
+                'qualification'       => 'required|string|max:255',
+                'experience_year'     => 'required|string',
+                'specialization'      => 'required|string',
+                'derma_phone_number'  => 'required|string|max:30',
+                'clinic_address'      => 'required|string|max:500',
+                'city'                => 'required|string',
+                'availability_days'   => 'required|array|min:1',
+                'availability_days.*' => 'string',
+                'profile_image'       => 'required|image|mimes:png,jpg,jpeg|max:2048',
+                'status'              => 'required|in:pending,approved,rejected',
+            ]);
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $user = User::create([
+                'name'     => $request->name,
+                'email'    => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
+
             $user->syncRoles($roles);
+
+            if ($isPatient) {
+                Patient::create([
+                    'user_id'      => $user->id,
+                    'phone_number' => $request->phone_number,
+                    'age'          => $request->age,
+                    'gender'       => $request->gender,
+                    'address'      => $request->address,
+                    'skin_type'    => $request->skin_type,
+                ]);
+            }
+
+            if ($isDermatologist) {
+                $imagePath = $request->file('profile_image')->store('dermatologists', 'public');
+
+                Dermatologist::create([
+                    'user_id'           => $user->id,
+                    'qualification'     => $request->qualification,
+                    'experience_year'   => $request->experience_year,
+                    'specialization'    => $request->specialization,
+                    'phone_number'      => $request->derma_phone_number,
+                    'clinic_address'    => $request->clinic_address,
+                    'city'              => $request->city,
+                    'availability_days' => $request->availability_days,
+                    'profile_image'     => $imagePath,
+                    'status'            => $request->status,
+                ]);
+            }
+
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            Log::error('Admin User Create Error: ' . $e->getMessage());
+
+            return back()->withInput()
+                ->with('error', 'Something went wrong while creating the user. Please try again.');
         }
 
         return redirect()->route('user.index')->with('success', 'User created successfully.');

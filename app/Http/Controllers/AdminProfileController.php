@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dermatologist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -51,18 +52,47 @@ class AdminProfileController extends Controller
 
         $user->save();
 
-        // Dermatologist-specific fields.
-        if ($user->hasRole('dermatologist') && $user->dermatologist) {
+        // Dermatologist-specific fields. A user can hold the dermatologist role
+        // without a profile record yet (e.g. created via the admin Users page) —
+        // in that case completing this form CREATES the profile (pending review).
+        if ($user->hasRole('dermatologist')) {
             $data = $request->validate([
-                'phone_number'    => ['nullable', 'string', 'max:30'],
-                'qualification'   => ['nullable', 'string', 'max:255'],
-                'specialization'  => ['nullable', 'string', 'max:255'],
-                'experience_year' => ['nullable', 'string', 'max:255'],
-                'clinic_address'  => ['nullable', 'string', 'max:500'],
-                'city'            => ['nullable', 'string', 'max:255'],
+                'qualification'       => ['required', 'string', 'max:255'],
+                'experience_year'     => ['required', 'string', 'max:255'],
+                'specialization'      => ['required', 'string', 'max:255'],
+                'phone_number'        => ['required', 'string', 'max:30'],
+                'clinic_address'      => ['required', 'string', 'max:500'],
+                'city'                => ['required', 'string', 'max:255'],
+                'availability_days'   => ['required', 'array', 'min:1'],
+                'availability_days.*' => ['string'],
+                'profile_image'       => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:2048'],
             ]);
 
-            $user->dermatologist->update($data);
+            $payload = [
+                'qualification'     => $data['qualification'],
+                'experience_year'   => $data['experience_year'],
+                'specialization'    => $data['specialization'],
+                'phone_number'      => $data['phone_number'],
+                'clinic_address'    => $data['clinic_address'],
+                'city'              => $data['city'],
+                'availability_days' => array_values($data['availability_days']),
+            ];
+
+            if ($request->hasFile('profile_image')) {
+                $payload['profile_image'] = $request->file('profile_image')->store('dermatologists', 'public');
+            }
+
+            if ($user->dermatologist) {
+                $user->dermatologist->update($payload);
+
+                return back()->with('success', 'Dermatologist profile updated successfully.');
+            }
+
+            $payload['user_id'] = $user->id;
+            $payload['status']  = 'pending';
+            Dermatologist::create($payload);
+
+            return back()->with('success', 'Your dermatologist profile has been submitted and is pending admin approval. Once approved it will appear in the public directory.');
         }
 
         // Patient-specific fields.
