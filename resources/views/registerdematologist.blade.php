@@ -2,6 +2,8 @@
 
 @section('content')
 
+    @include('includes.password-toggle')
+
     <!-- ── HERO ─────────────────────────────────────────── -->
     <section class="auth-hero">
         <div class="container">
@@ -111,8 +113,11 @@
                                     <div class="col-md-6">
                                         <label class="form-label-custom" for="password">Password <span class="required">*</span></label>
                                         <div class="input-with-icon">
-                                            <input type="password" id="password" name="password" class="form-control-custom" placeholder="Create a strong password" required minlength="8">
+                                            <input type="password" id="password" name="password" class="form-control-custom has-eye" placeholder="Create a strong password" required minlength="8">
                                             <i class="fas fa-lock"></i>
+                                            <button type="button" class="pw-eye" data-target="password" aria-label="Show password">
+                                                <i class="far fa-eye"></i>
+                                            </button>
                                         </div>
                                         <div class="input-helper"><i class="fas fa-info-circle"></i>Minimum 8 characters</div>
                                     </div>
@@ -120,8 +125,11 @@
                                     <div class="col-md-6">
                                         <label class="form-label-custom" for="password_confirmation">Confirm Password <span class="required">*</span></label>
                                         <div class="input-with-icon">
-                                            <input type="password" id="password_confirmation" name="password_confirmation" class="form-control-custom" placeholder="Re-enter password" required minlength="8">
+                                            <input type="password" id="password_confirmation" name="password_confirmation" class="form-control-custom has-eye" placeholder="Re-enter password" required minlength="8">
                                             <i class="fas fa-lock"></i>
+                                            <button type="button" class="pw-eye" data-target="password_confirmation" aria-label="Show password">
+                                                <i class="far fa-eye"></i>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

@@ -23,6 +23,7 @@ class PatientRegisterController extends Controller
                 'gender'            => ['required', 'in:Male,Female,Other,Prefer not to say'],
                 'address'           => ['nullable', 'string', 'max:1000'],
                 'skin_type'         => ['nullable', 'in:Normal,Oily,Dry,Combination,Sensitive,Not sure'],
+                'profile_image'     => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:2048'],
                 'terms'             => ['required', 'accepted'],
             ]);
 
@@ -37,13 +38,18 @@ class PatientRegisterController extends Controller
                     'password' => Hash::make($validated['password']),
                 ]);
 
+                $imagePath = $request->hasFile('profile_image')
+                    ? $request->file('profile_image')->store('patients', 'public')
+                    : null;
+
                 Patient::create([
-                    'user_id'      => $user->id,
-                    'phone_number' => $validated['phone_number'],
-                    'age'          => $validated['age'],
-                    'gender'       => $validated['gender'],
-                    'address'      => $validated['address'] ?? null,
-                    'skin_type'    => $validated['skin_type'] ?? null,
+                    'user_id'       => $user->id,
+                    'phone_number'  => $validated['phone_number'],
+                    'age'           => $validated['age'],
+                    'gender'        => $validated['gender'],
+                    'address'       => $validated['address'] ?? null,
+                    'skin_type'     => $validated['skin_type'] ?? null,
+                    'profile_image' => $imagePath,
                 ]);
 
                 $user->assignRole('patient');

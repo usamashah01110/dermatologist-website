@@ -147,4 +147,17 @@ Route::middleware('auth')->group(function () {
 Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('auth.google');
 Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
 
+// Local-only in-browser previews of the transactional emails.
+if (app()->environment('local')) {
+    Route::get('/email/preview/dermatologist-approved', function () {
+        $dermatologist = \App\Models\Dermatologist::with('user')->latest()->firstOrFail();
+        return new \App\Mail\DermatologistApprovedMail($dermatologist);
+    });
+
+    Route::get('/email/preview/appointment-confirmed', function () {
+        $appointment = \App\Models\Appointment::with('dermatologist.user')->latest()->firstOrFail();
+        return new \App\Mail\AppointmentConfirmedMail($appointment);
+    });
+}
+
 require __DIR__.'/auth.php';

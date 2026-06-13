@@ -16,6 +16,7 @@ class Patient extends Model
         'gender',
         'address',
         'skin_type',
+        'profile_image',
     ];
 
     public function user()

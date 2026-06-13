@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AppointmentConfirmedMail;
 use App\Models\Appointment;
 use App\Models\AppointmentImage;
 use App\Models\Dermatologist;
@@ -9,6 +10,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class AppointmentController extends Controller
 {
@@ -236,7 +239,26 @@ class AppointmentController extends Controller
             abort(403, 'You are not allowed to change this appointment.');
         }
 
+        $previousStatus = $appointment->status;
+
         $appointment->update(['status' => $data['status']]);
+
+        // Email the patient when their appointment is confirmed (only on the
+        // transition into "confirmed", and only when a doctor/admin did it).
+        if ($data['status'] === 'confirmed'
+            && $previousStatus !== 'confirmed'
+            && $canManage
+            && $appointment->patient_email) {
+            try {
+                $appointment->loadMissing('dermatologist.user');
+
+                Mail::to($appointment->patient_email)
+                    ->send(new AppointmentConfirmedMail($appointment));
+            } catch (\Throwable $e) {
+                // Never block the status change if the mail server hiccups.
+                Log::error('Appointment confirmation email failed: ' . $e->getMessage());
+            }
+        }
 
         return back()->with('success', "Appointment marked as {$data['status']}.");
     }

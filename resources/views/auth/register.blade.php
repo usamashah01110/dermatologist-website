@@ -2,6 +2,8 @@
 
 @section('content')
 
+    @include('includes.password-toggle')
+
     <!-- ── HERO ─────────────────────────────────────────── -->
     <section class="auth-hero">
         <div class="container">
@@ -122,7 +124,7 @@
                             <a href="{{ route('register.dermatologist') }}">Register here instead <i class="fas fa-arrow-right ms-1" style="font-size:.7rem"></i></a>
                         </div>
 
-                        <form action="{{ route('store.patient') }}" method="POST" id="patientRegisterForm" novalidate>
+                        <form action="{{ route('store.patient') }}" method="POST" id="patientRegisterForm" enctype="multipart/form-data" novalidate>
                             @csrf
 
                             <!-- ── Section 1: Account Information ─── -->
@@ -172,9 +174,12 @@
                                         <label class="form-label-custom" for="password">Password <span class="required">*</span></label>
                                         <div class="input-with-icon">
                                             <input type="password" id="password" name="password"
-                                                   class="form-control-custom @error('password') is-invalid @enderror"
+                                                   class="form-control-custom has-eye @error('password') is-invalid @enderror"
                                                    placeholder="Create a strong password" required minlength="8">
                                             <i class="fas fa-lock"></i>
+                                            <button type="button" class="pw-eye" data-target="password" aria-label="Show password">
+                                                <i class="far fa-eye"></i>
+                                            </button>
                                         </div>
                                         <div class="input-helper"><i class="fas fa-info-circle"></i>Minimum 8 characters</div>
                                         @error('password')
@@ -188,9 +193,12 @@
                                         <label class="form-label-custom" for="password_confirmation">Confirm Password <span class="required">*</span></label>
                                         <div class="input-with-icon">
                                             <input type="password" id="password_confirmation" name="password_confirmation"
-                                                   class="form-control-custom @error('password_confirmation') is-invalid @enderror"
+                                                   class="form-control-custom has-eye @error('password_confirmation') is-invalid @enderror"
                                                    placeholder="Re-enter password" required minlength="8">
                                             <i class="fas fa-lock"></i>
+                                            <button type="button" class="pw-eye" data-target="password_confirmation" aria-label="Show password">
+                                                <i class="far fa-eye"></i>
+                                            </button>
                                         </div>
                                         @error('password_confirmation')
                                         <div class="input-error">
@@ -265,6 +273,20 @@
                                             </label>
                                         </div>
                                         @error('gender')
+                                        <div class="input-error">
+                                            <i class="fas fa-circle-exclamation"></i>{{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label class="form-label-custom" for="profile_image">Profile Photo <span class="optional">(optional)</span></label>
+                                        <input type="file" id="profile_image" name="profile_image"
+                                               class="form-control-custom @error('profile_image') is-invalid @enderror"
+                                               accept="image/png,image/jpeg,image/jpg">
+                                        <div class="input-helper"><i class="fas fa-info-circle"></i>JPG or PNG, up to 2&nbsp;MB. This appears on your profile.</div>
+                                        <div id="patientImagePreview" class="mt-2"></div>
+                                        @error('profile_image')
                                         <div class="input-error">
                                             <i class="fas fa-circle-exclamation"></i>{{ $message }}
                                         </div>
@@ -378,6 +400,23 @@
                 const firstError = document.querySelector('.input-error, .alert-validation');
                 if (firstError) {
                     firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+
+                // Profile photo thumbnail preview
+                const imgInput = document.getElementById('profile_image');
+                const imgPreview = document.getElementById('patientImagePreview');
+                if (imgInput && imgPreview) {
+                    imgInput.addEventListener('change', function () {
+                        imgPreview.innerHTML = '';
+                        const file = imgInput.files[0];
+                        if (file && file.type.startsWith('image/')) {
+                            const img = document.createElement('img');
+                            img.src = URL.createObjectURL(file);
+                            img.style.cssText = 'width:90px;height:90px;object-fit:cover;border-radius:10px;border:1px solid #e5e7eb;';
+                            img.onload = () => URL.revokeObjectURL(img.src);
+                            imgPreview.appendChild(img);
+                        }
+                    });
                 }
             })();
         </script>

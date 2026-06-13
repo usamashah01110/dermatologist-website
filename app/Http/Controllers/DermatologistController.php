@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\DermatologistApprovedMail;
 use App\Models\Dermatologist;
 use App\Models\Review;
 use App\Models\User;
@@ -9,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class DermatologistController extends Controller
 
@@ -105,9 +107,27 @@ class DermatologistController extends Controller
 
     public function update(Request $request, $id)
     {
-        $dermatologist = Dermatologist::findOrFail($id);
+        $dermatologist = Dermatologist::with('user')->findOrFail($id);
+
+        $previousStatus = $dermatologist->status;
         $dermatologist->status = $request->status;
         $dermatologist->save();
+
+        // Notify the dermatologist by email the moment their profile is approved
+        // (only on the transition into "approved", so re-saving an approved
+        // profile does not spam them).
+        if ($request->status === 'approved'
+            && $previousStatus !== 'approved'
+            && $dermatologist->user
+            && $dermatologist->user->email) {
+            try {
+                Mail::to($dermatologist->user->email)
+                    ->send(new DermatologistApprovedMail($dermatologist));
+            } catch (\Throwable $e) {
+                // Never block the approval if the mail server hiccups.
+                Log::error('Dermatologist approval email failed: ' . $e->getMessage());
+            }
+        }
 
         return redirect()->route('dermatologist.index')->with('success', 'Dermatologist status updated successfully.');
     }
