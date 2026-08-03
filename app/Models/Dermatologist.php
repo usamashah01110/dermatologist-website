@@ -18,6 +18,7 @@ class Dermatologist extends Model
         'phone_number',
         'clinic_address',
         'city',
+        'consultation_fee',
         'availability_days',
         'profile_image',
         'status',

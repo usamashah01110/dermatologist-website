@@ -239,6 +239,14 @@
                                     </div>
 
                                     <div class="col-md-12">
+                                        <label class="form-label-custom" for="consultation_fee">Consultation Fee (Rs) <span class="optional">(optional)</span></label>
+                                        <div class="input-with-icon">
+                                            <input type="number" id="consultation_fee" name="consultation_fee" min="0" class="form-control-custom" placeholder="e.g. 1500" value="{{ old('consultation_fee') }}">
+                                            <i class="fas fa-money-bill-wave"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
                                         <label class="form-label-custom">Availability Days <span class="required">*</span></label>
                                         <div class="days-selector">
                                             @php

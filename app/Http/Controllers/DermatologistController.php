@@ -50,6 +50,7 @@ class DermatologistController extends Controller
             'phone_number'         => ['required', 'string', 'max:30'],
             'clinic_address'       => ['required', 'string', 'max:500'],
             'city'                 => ['required', 'string'],
+            'consultation_fee'     => ['nullable', 'integer', 'min:0', 'max:1000000'],
             'availability_days'    => ['required', 'array', 'min:1'],
             'availability_days.*'  => ['string'],
             'profile_image'        => ['required', 'image', 'mimes:png,jpg,jpeg', 'max:2048'],
@@ -74,6 +75,7 @@ class DermatologistController extends Controller
                     'phone_number'      => $validated['phone_number'],
                     'clinic_address'    => $validated['clinic_address'],
                     'city'              => $validated['city'],
+                    'consultation_fee'  => $validated['consultation_fee'] ?? null,
                     'availability_days' => $validated['availability_days'],
                     'profile_image'     => $imagePath,
                     'status'            => $validated['status'],
@@ -109,8 +111,19 @@ class DermatologistController extends Controller
     {
         $dermatologist = Dermatologist::with('user')->findOrFail($id);
 
+        $request->validate([
+            'consultation_fee' => ['nullable', 'integer', 'min:0', 'max:1000000'],
+        ]);
+
         $previousStatus = $dermatologist->status;
         $dermatologist->status = $request->status;
+
+        if ($request->has('consultation_fee')) {
+            $dermatologist->consultation_fee = $request->consultation_fee !== null && $request->consultation_fee !== ''
+                ? $request->consultation_fee
+                : null;
+        }
+
         $dermatologist->save();
 
         // Notify the dermatologist by email the moment their profile is approved
@@ -158,6 +171,7 @@ class DermatologistController extends Controller
             'phone_number'         => ['required', 'string', 'max:30'],
             'clinic_address'       => ['required', 'string', 'max:500'],
             'city'                 => ['required', 'string'],
+            'consultation_fee'     => ['nullable', 'integer', 'min:0', 'max:1000000'],
             'availability_days'    => ['required', 'array', 'min:1'],
             'availability_days.*'  => ['string'],
             'profile_image'        => ['required', 'image', 'mimes:png,jpg,jpeg', 'max:2048'],
@@ -185,6 +199,7 @@ class DermatologistController extends Controller
                     'phone_number'      => $validated['phone_number'],
                     'clinic_address'    => $validated['clinic_address'],
                     'city'              => $validated['city'],
+                    'consultation_fee'  => $validated['consultation_fee'] ?? null,
                     'availability_days' => $validated['availability_days'],
                     'profile_image'     => $imagePath,
                     'status'            => 'pending',

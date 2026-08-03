@@ -15,14 +15,20 @@
         <div class="mb-3">
             <label class="form-label">Current Status</label>
             <select name="status" class="form-control">
-                
+
                 <option value="pending" {{ $dermatologist->status == 'pending' ? 'selected' : '' }}>Pending</option>
                 <option value="approved" {{ $dermatologist->status == 'approved' ? 'selected' : '' }}>Approved</option>
                 <option value="rejected" {{ $dermatologist->status == 'rejected' ? 'selected' : '' }}>Rejected</option>
             </select>
         </div>
 
-        <button type="submit" class="btn btn-primary">Update Status</button>
+        <div class="mb-3">
+            <label class="form-label">Consultation Fee (Rs)</label>
+            <input type="number" name="consultation_fee" min="0" class="form-control"
+                   value="{{ old('consultation_fee', $dermatologist->consultation_fee) }}" placeholder="e.g. 1500">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update</button>
         <a href="{{ route('dermatologist.index') }}" class="btn btn-secondary">Back</a>
     </form>
 </div>

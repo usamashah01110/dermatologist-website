@@ -78,6 +78,13 @@
                         @error('city')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="col-md-6 mb-3">
+                        <label for="consultation_fee" class="form-label">Consultation Fee (Rs)</label>
+                        <input type="number" name="consultation_fee" id="consultation_fee" min="0"
+                               class="form-control @error('consultation_fee') is-invalid @enderror"
+                               value="{{ old('consultation_fee') }}" placeholder="e.g. 1500">
+                        @error('consultation_fee')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                    <div class="col-md-6 mb-3">
                         <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
                         <select name="status" id="status" class="form-select @error('status') is-invalid @enderror" required>
                             <option value="approved" {{ old('status', 'approved') == 'approved' ? 'selected' : '' }}>Approved</option>

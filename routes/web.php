@@ -39,15 +39,18 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
 
 //Dermatologist Routes
-Route::get('/register/dermatologist', [DermatologistController::class, 'index'])->name('register.dermatologist');
+// Registration (GET form + POST store) is guest-only, like the patient
+// /register route — logged-in users are redirected to the dashboard.
+Route::middleware('guest')->group(function () {
+    Route::get('/register/dermatologist', [DermatologistController::class, 'index'])->name('register.dermatologist');
+    Route::post('/store/dermatologist', [DermatologistController::class, 'store'])->name('store.dermatologist');
+
+    //Patient Routes
+    Route::post('/store/patient', [PatientRegisterController::class, 'store'])->name('store.patient');
+});
+
+// Public dermatologist detail page (open to everyone).
 Route::get('/dermatologist/detail/{id}', [DermatologistController::class, 'detailDermatologist'])->name('dermatologist.detail');
-Route::post('/store/dermatologist', [DermatologistController::class, 'store'])->name('store.dermatologist');
-
-
-
-
-//Patient Routes
-Route::post('/store/patient',[PatientRegisterController::class, 'store'])->name('store.patient');
 
 
 // Appointment Routes
