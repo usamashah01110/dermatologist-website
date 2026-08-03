@@ -136,6 +136,9 @@
                                                 <span class="dropdown-item text-muted">No actions</span>
                                             @endif
                                         @else
+                                            <a class="dropdown-item" href="{{ route('appointments.edit', $appointment) }}">
+                                                <i class="bx bx-edit-alt me-1"></i> Edit
+                                            </a>
                                             @foreach(['confirmed' => 'Confirm', 'completed' => 'Mark completed', 'cancelled' => 'Cancel', 'pending' => 'Set pending'] as $status => $label)
                                                 @continue($appointment->status === $status)
                                                 <form method="POST" action="{{ route('appointments.updateStatus', $appointment) }}">

@@ -71,6 +71,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/appointments/list', [AppointmentController::class, 'index'])->name('appointments.index');
     Route::patch('/appointments/{appointment}/status', [AppointmentController::class, 'updateStatus'])
         ->name('appointments.updateStatus');
+    // Edit & update appointment (dermatologist may edit and approve)
+    Route::get('/appointments/{appointment}/edit', [AppointmentController::class, 'edit'])
+        ->name('appointments.edit');
+    Route::put('/appointments/{appointment}', [AppointmentController::class, 'update'])
+        ->name('appointments.update');
 
     // Admin-panel: patients (superadmin + dermatologist)
     Route::get('/admin/patients', [PatientController::class, 'index'])->name('patients.index');
@@ -90,6 +95,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/review/index', [ReviewController::class, 'index'])->name('review.index');
     Route::get('/review/create', [ReviewController::class, 'create'])->name('review.create');
     Route::post('/review/store/{id}', [ReviewController::class, 'store'])->name('review.store');
+    Route::post('/review/store', [ReviewController::class, 'storeAdmin'])->name('review.store.admin');
     Route::delete('/review/destroy/{id}', [ReviewController::class, 'destroy'])->name('review.destroy');
     Route::get('/review/edit/{id}', [ReviewController::class, 'edit'])->name('review.edit');
     Route::put('/review/update/{id}', [ReviewController::class, 'update'])->name('review.update');

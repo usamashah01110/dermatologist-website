@@ -8,7 +8,7 @@
                       <h5 class="mb-0">Create Patient Review</h5>
                     </div>
                     <div class="card-body">                      
-                    <form action="{{ route('review.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('review.store.admin') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         
                         <div class="mb-6">

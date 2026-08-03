@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
+use Spatie\Permission\Models\Role;
 
 class PatientRegisterController extends Controller
 {
@@ -52,6 +53,7 @@ class PatientRegisterController extends Controller
                     'profile_image' => $imagePath,
                 ]);
 
+                Role::firstOrCreate(['name' => 'patient', 'guard_name' => 'web']);
                 $user->assignRole('patient');
 
                 DB::commit();

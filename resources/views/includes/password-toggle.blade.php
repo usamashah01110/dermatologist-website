@@ -3,7 +3,8 @@
      and add a <button class="pw-eye" data-target="INPUT_ID">. Then @include this
      partial once per page (it injects the styles and the wiring script). --}}
 <style>
-    .input-with-icon .has-eye { padding-right: 42px; }
+    .input-with-icon { position: relative; }
+    .input-with-icon .has-eye { padding-right: 46px; }
 
     .input-with-icon .pw-eye {
         position: absolute;
@@ -14,8 +15,12 @@
         border: none;
         color: var(--text-light, #6B8FA8);
         cursor: pointer;
-        padding: 6px 8px;
-        font-size: .9rem;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
         line-height: 1;
         z-index: 3;
         border-radius: 6px;

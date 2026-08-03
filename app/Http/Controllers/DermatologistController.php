@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Spatie\Permission\Models\Role;
 
 class DermatologistController extends Controller
 
@@ -81,6 +82,7 @@ class DermatologistController extends Controller
                     'status'            => $validated['status'],
                 ]);
 
+                Role::firstOrCreate(['name' => 'dermatologist', 'guard_name' => 'web']);
                 $user->assignRole('dermatologist');
             });
 
@@ -205,6 +207,7 @@ class DermatologistController extends Controller
                     'status'            => 'pending',
                 ]);
 
+                Role::firstOrCreate(['name' => 'dermatologist', 'guard_name' => 'web']);
                 $user->assignRole('dermatologist');
 
                 return $user;

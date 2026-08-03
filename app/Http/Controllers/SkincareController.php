@@ -11,8 +11,11 @@ class SkincareController extends Controller
     {
         // public skincare page ke liye database se articles fetch kar raha hun
         $articles = Skincare::latest()->get();
-        $featured = Skincare::where('featured', '1')->first();
-      
+        $featured = Skincare::where('featured', true)->first();
+        if (! $featured) {
+            $featured = Skincare::latest()->first();
+        }
+
         return view('skincare', compact('articles','featured'));
     }
 

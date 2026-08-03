@@ -55,9 +55,9 @@ class AppointmentController extends Controller
 
             $query->where('dermatologist_id', $dermatologist->id);
 
-            // Doctors land on "today" by default; they can filter to older days.
+            // Show all upcoming doctor appointments by default, not just today.
             if (! $date) {
-                $date = Carbon::today()->toDateString();
+                $query->whereDate('appointment_date', '>=', Carbon::today());
             }
         } elseif ($user->hasRole('patient')) {
             $patient = $user->patient;
@@ -86,11 +86,17 @@ class AppointmentController extends Controller
             'cancelled' => $appointments->where('status', 'cancelled')->count(),
         ];
 
+        // If a user holds both `dermatologist` and `patient` roles the
+        // dermatologist semantics should take precedence in the admin panel
+        // appointment listing. Compute `isPatient` so views don't accidentally
+        // hide dermatologist actions for such users.
+        $isPatient = $user->hasRole('patient') && ! $user->hasRole('dermatologist');
+
         return view('admin.appointments.index', [
             'appointments' => $appointments,
             'date'         => $date,
             'stats'        => $stats,
-            'isPatient'    => $user->hasRole('patient'),
+            'isPatient'    => $isPatient,
         ]);
     }
 
@@ -261,6 +267,76 @@ class AppointmentController extends Controller
         }
 
         return back()->with('success', "Appointment marked as {$data['status']}.");
+    }
+
+    /**
+     * Show the edit form for an appointment.
+     */
+    public function edit(Request $request, Appointment $appointment)
+    {
+        $user = $request->user();
+
+        $isOwningDoctor = $user->hasRole('dermatologist')
+            && optional($user->dermatologist)->id === $appointment->dermatologist_id;
+
+        if (! $user->hasRole('superadmin') && ! $isOwningDoctor) {
+            abort(403, 'You are not allowed to edit this appointment.');
+        }
+
+        return view('admin.appointments.edit', [
+            'appointment' => $appointment->load('dermatologist.user', 'patient.user'),
+        ]);
+    }
+
+    /**
+     * Persist edits to an appointment (including status changes).
+     */
+    public function update(Request $request, Appointment $appointment)
+    {
+        $user = $request->user();
+
+        $isOwningDoctor = $user->hasRole('dermatologist')
+            && optional($user->dermatologist)->id === $appointment->dermatologist_id;
+
+        if (! $user->hasRole('superadmin') && ! $isOwningDoctor) {
+            abort(403, 'You are not allowed to update this appointment.');
+        }
+
+        $data = $request->validate([
+            'appointment_date' => ['required', 'date', 'after_or_equal:today'],
+            'appointment_time' => ['required', 'date_format:H:i'],
+            'appointment_type' => ['required', 'in:consultation,follow_up,treatment,emergency'],
+            'notes'            => ['nullable', 'string', 'max:2000'],
+            'status'           => ['required', 'in:pending,confirmed,completed,cancelled'],
+        ]);
+
+        $previousStatus = $appointment->status;
+
+        $appointment->update([
+            'appointment_date' => $data['appointment_date'],
+            'appointment_time' => $data['appointment_time'],
+            'appointment_type' => $data['appointment_type'],
+            'notes'            => $data['notes'] ?? null,
+            'status'           => $data['status'],
+        ]);
+
+        // If status transitioned into confirmed and the updater is a doctor/admin,
+        // send the confirmation email to the patient.
+        if ($data['status'] === 'confirmed'
+            && $previousStatus !== 'confirmed'
+            && ($user->hasRole('superadmin') || $isOwningDoctor)
+            && $appointment->patient_email) {
+            try {
+                $appointment->loadMissing('dermatologist.user');
+
+                Mail::to($appointment->patient_email)
+                    ->send(new AppointmentConfirmedMail($appointment));
+            } catch (\Throwable $e) {
+                Log::error('Appointment confirmation email failed: ' . $e->getMessage());
+            }
+        }
+
+        return redirect()->route('appointments.index')->with('success', 'Appointment updated successfully.');
     }
 
     /**

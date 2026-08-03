@@ -26,16 +26,24 @@
   <div class="container">
     <div class="featured-card">
       <div class="featured-row">
-        <div class="featured-media">
-          <img src="{{ asset( $featured) }}"
-               alt="HydraFacial treatment"
-               loading="lazy"
-               style="height: 200px; object-fit: cover; width: 100%;">
+        <div class="featured-image">
+          <img src="{{ asset($featured?->image_path ?? 'https://images.unsplash.com/photo-1587502536263-3ff3a90ac499?w=1000&q=80&fit=crop') }}"
+               alt="{{ $featured?->title ?? 'Featured skincare article' }}"
+               loading="lazy">
         </div>
-        <div class="featured-details">
-          <h2>{{ $featured->title }}</h2>
-          <p>{{ $featured->content }}</p>
-          <div class="article-meta"></div>
+        <div class="featured-content">
+          <span class="featured-category">Skincare Insight</span>
+          <h2>{{ $featured?->title ?? 'Featured skincare article is coming soon' }}</h2>
+          <p>{{ $featured?->content ?? 'Ham jald hi featured skincare content yahan display karenge. Admin dashboard se article add karein.' }}</p>
+          <div class="article-meta">
+            <div class="article-meta-author">
+              <div class="article-meta-avatar">S</div>
+              <div>
+                <strong>{{ $featured?->author_name ?? 'DermaConnect Team' }}</strong>
+                <span>{{ $featured?->created_at?->format('F j, Y') ?? now()->format('F j, Y') }}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

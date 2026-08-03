@@ -58,6 +58,31 @@ class ReviewController extends Controller
         return back()->with('success', 'Thank you! Your review has been published successfully.');
     }
 
+    public function storeAdmin(Request $request)
+    {
+        $request->validate([
+            'name'        => 'required|string|max:255',
+            'location'    => 'required|string|max:255',
+            'review_text' => 'required|string|min:10|max:1000',
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $data = $request->only(['name', 'location', 'review_text']);
+        $data['rating'] = 5;
+        $data['status'] = 'approved';
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/reviews', $filename);
+            $data['image_path'] = 'reviews/' . $filename;
+        }
+
+        Review::create($data);
+
+        return redirect()->route('review.index')->with('success', 'Review created successfully.');
+    }
+
     public function destroy($id)
     {
         $review=Review::find($id);
