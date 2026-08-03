@@ -35,7 +35,9 @@
                 >Star</a
                 >
             </li>
-
+            @php
+            $user = auth()->user();
+            @endphp
             <!-- User -->
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a
@@ -43,7 +45,13 @@
                     href="javascript:void(0);"
                     data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                        @if($user->hasRole('dermatologist'))
+                            @if($user->dermatologist && $user->dermatologist->profile_image)
+                                <img src="{{ asset('storage/' . $user->dermatologist->profile_image) }}" alt="Dermatologist Profile" class="rounded-circle" >
+                            @else
+                                <img src="{{ asset('assets/img/avatars/1.png') }}" alt="Default Avatar" class="rounded-circle" >
+                            @endif
+                       @endif
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -52,7 +60,13 @@
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
-                                        <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                                               @if($user->hasRole('dermatologist'))
+                                                @if($user->dermatologist && $user->dermatologist->profile_image)
+                                                    <img src="{{ asset('storage/' . $user->dermatologist->profile_image) }}" alt="Dermatologist Profile" class="rounded-circle" >
+                                                @else
+                                                    <img src="{{ asset('assets/img/avatars/1.png') }}" alt="Default Avatar" class="rounded-circle" >
+                                                @endif
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">

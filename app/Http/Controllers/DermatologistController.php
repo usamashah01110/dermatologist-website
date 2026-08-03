@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\DermatologistApprovedMail;
 use App\Models\Dermatologist;
 use App\Models\Review;
 use App\Models\User;
@@ -10,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Models\Role;
 
 class DermatologistController extends Controller
@@ -61,14 +59,14 @@ class DermatologistController extends Controller
         try {
             $imagePath = $request->file('profile_image')->store('dermatologists', 'public');
 
-            DB::transaction(function () use ($validated, $imagePath) {
+            $dermatologist = DB::transaction(function () use ($validated, $imagePath) {
                 $user = User::create([
                     'name'     => $validated['name'],
                     'email'    => $validated['email'],
                     'password' => Hash::make($validated['password']),
                 ]);
 
-                Dermatologist::create([
+                $dermatologist = Dermatologist::create([
                     'user_id'           => $user->id,
                     'qualification'     => $validated['qualification'],
                     'experience_year'   => $validated['experience_year'],
@@ -84,7 +82,22 @@ class DermatologistController extends Controller
 
                 Role::firstOrCreate(['name' => 'dermatologist', 'guard_name' => 'web']);
                 $user->assignRole('dermatologist');
+
+                return $dermatologist->setRelation('user', $user);
             });
+
+            // Created straight into the approved state — notify them right away.
+            // Sent after the transaction commits so we never email about a
+            // profile that ended up rolled back.
+            if ($dermatologist->status === 'approved') {
+                if ($dermatologist->sendApprovalNotification()) {
+                    return redirect()->route('dermatologist.index')
+                        ->with('success', "Dermatologist created and approved. Approval email sent to {$dermatologist->user->email}.");
+                }
+
+                return redirect()->route('dermatologist.index')
+                    ->with('error', 'Dermatologist created and approved, but the approval email could not be sent. Check the mail settings in .env and storage/logs/laravel.log.');
+            }
 
             return redirect()->route('dermatologist.index')
                 ->with('success', 'Dermatologist created successfully.');
@@ -131,17 +144,14 @@ class DermatologistController extends Controller
         // Notify the dermatologist by email the moment their profile is approved
         // (only on the transition into "approved", so re-saving an approved
         // profile does not spam them).
-        if ($request->status === 'approved'
-            && $previousStatus !== 'approved'
-            && $dermatologist->user
-            && $dermatologist->user->email) {
-            try {
-                Mail::to($dermatologist->user->email)
-                    ->send(new DermatologistApprovedMail($dermatologist));
-            } catch (\Throwable $e) {
-                // Never block the approval if the mail server hiccups.
-                Log::error('Dermatologist approval email failed: ' . $e->getMessage());
+        if ($request->status === 'approved' && $previousStatus !== 'approved') {
+            if ($dermatologist->sendApprovalNotification()) {
+                return redirect()->route('dermatologist.index')
+                    ->with('success', "Dermatologist approved. Approval email sent to {$dermatologist->user->email}.");
             }
+
+            return redirect()->route('dermatologist.index')
+                ->with('error', 'Dermatologist approved, but the approval email could not be sent. Check the mail settings in .env and storage/logs/laravel.log.');
         }
 
         return redirect()->route('dermatologist.index')->with('success', 'Dermatologist status updated successfully.');

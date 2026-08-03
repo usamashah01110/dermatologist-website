@@ -76,6 +76,8 @@ class UserController extends Controller
             ]);
         }
 
+        $dermatologist = null;
+
         try {
             DB::beginTransaction();
 
@@ -101,7 +103,7 @@ class UserController extends Controller
             if ($isDermatologist) {
                 $imagePath = $request->file('profile_image')->store('dermatologists', 'public');
 
-                Dermatologist::create([
+                $dermatologist = Dermatologist::create([
                     'user_id'           => $user->id,
                     'qualification'     => $request->qualification,
                     'experience_year'   => $request->experience_year,
@@ -113,6 +115,8 @@ class UserController extends Controller
                     'profile_image'     => $imagePath,
                     'status'            => $request->status,
                 ]);
+
+                $dermatologist->setRelation('user', $user);
             }
 
             DB::commit();
@@ -122,6 +126,18 @@ class UserController extends Controller
 
             return back()->withInput()
                 ->with('error', 'Something went wrong while creating the user. Please try again.');
+        }
+
+        // A dermatologist created straight into the approved state gets the same
+        // approval email as one approved later from the dermatologist screen.
+        if ($dermatologist && $dermatologist->status === 'approved') {
+            if ($dermatologist->sendApprovalNotification()) {
+                return redirect()->route('user.index')
+                    ->with('success', "User created. Approval email sent to {$dermatologist->user->email}.");
+            }
+
+            return redirect()->route('user.index')
+                ->with('error', 'User created and approved, but the approval email could not be sent. Check the mail settings in .env and storage/logs/laravel.log.');
         }
 
         return redirect()->route('user.index')->with('success', 'User created successfully.');

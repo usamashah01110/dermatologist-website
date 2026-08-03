@@ -30,7 +30,13 @@
             <div class="card">
                 <div class="card-body text-center">
                     <div class="avatar avatar-xl mx-auto mb-3">
-                        <img src="{{ $user->avatar ?? asset('assets/img/avatars/1.png') }}" alt="avatar" class="rounded-circle">
+                         @if($user->hasRole('dermatologist'))
+                            @if($user->dermatologist && $user->dermatologist->profile_image)
+                                <img src="{{ asset('storage/' . $user->dermatologist->profile_image) }}" alt="Dermatologist Profile" class="rounded-circle" >
+                            @else
+                                <img src="{{ asset('assets/img/avatars/1.png') }}" alt="Default Avatar" class="rounded-circle" >
+                            @endif
+                       @endif
                     </div>
                     <h5 class="mb-1">{{ $user->name }}</h5>
                     <p class="text-muted mb-2">{{ $user->email }}</p>
