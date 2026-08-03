@@ -194,7 +194,7 @@
         <span class="section-label">Ready to start</span>
         <h2 class="section-title">Book your consultation with trusted dermatologists.</h2>
         <p class="section-subtitle">Whether you are seeking treatment for a skin condition or looking for preventative care, our team is ready to support you with experience and compassion.</p>
-        <a href="#" class="btn-register mt-3"><i class="fas fa-calendar-check"></i> Book Appointment</a>
+        <a href="{{ route('dermatologists.page') }}" class="btn-register mt-3"><i class="fas fa-calendar-check"></i> Book Appointment</a>
       </div>
       <div class="col-lg-5">
         <div class="register-visual" style="height:360px;">
