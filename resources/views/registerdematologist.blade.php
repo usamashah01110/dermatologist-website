@@ -62,6 +62,7 @@
 
                             <div class="auth-sidebar-footer">
                                 Already have an account?<br>
+                                
                                 <a href="{{ route('login') }}">Sign in to your dashboard <i class="fas fa-arrow-right ms-1" style="font-size:.75rem"></i></a>
                             </div>
                         </div>
@@ -74,7 +75,7 @@
 
                         <div class="auth-card-header">
                             <h2>Create Your Professional Account</h2>
-                            <p>Fill in your details below. Your application will be reviewed within 24–48 hours.</p>
+
                         </div>
 
                         {{-- AJAX response alert --}}
@@ -86,47 +87,40 @@
                             <!-- ── Section 1: Account Information ─── -->
                             <div class="form-section">
                                 <div class="form-section-title">
-                                    <div class="form-section-number">1</div>
                                     <div>
                                         <h5>Account Information</h5>
-                                        <small>Your login credentials</small>
                                     </div>
                                 </div>
 
                                 <div class="row g-3">
                                     <div class="col-md-12">
-                                        <label class="form-label-custom" for="name">Full Name <span class="required">*</span></label>
+                                        <label class="form-label-custom" for="name">Full Name</label>
                                         <div class="input-with-icon">
-                                            <input type="text" id="name" name="name" class="form-control-custom" placeholder="Dr. Fatima Khan" value="{{ old('name') }}" required>
-                                            <i class="fas fa-user"></i>
+                                            <input type="text" id="name" name="name" class="form-control-custom"  placeholder="Enter  name" value="{{ old('name') }}" required>
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
-                                        <label class="form-label-custom" for="email">Email Address <span class="required">*</span></label>
+                                        <label class="form-label-custom" for="email">Email Address</label>
                                         <div class="input-with-icon">
-                                            <input type="email" id="email" name="email" class="form-control-custom" placeholder="dr.name@example.com" value="{{ old('email') }}" required>
-                                            <i class="fas fa-envelope"></i>
+                                            <input type="email" id="email" name="email" class="form-control-custom" value="{{ old('email') }}" required>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label class="form-label-custom" for="password">Password <span class="required">*</span></label>
+                                        <label class="form-label-custom" for="password">Password</label>
                                         <div class="input-with-icon">
-                                            <input type="password" id="password" name="password" class="form-control-custom has-eye" placeholder="Create a strong password" required minlength="8">
-                                            <i class="fas fa-lock"></i>
+                                            <input type="password" id="password" name="password" class="form-control-custom has-eye"  required minlength="8">
                                             <button type="button" class="pw-eye" data-target="password" aria-label="Show password">
                                                 <i class="far fa-eye"></i>
                                             </button>
                                         </div>
-                                        <div class="input-helper"><i class="fas fa-info-circle"></i>Minimum 8 characters</div>
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label class="form-label-custom" for="password_confirmation">Confirm Password <span class="required">*</span></label>
+                                        <label class="form-label-custom" for="password_confirmation">Confirm Password</label>
                                         <div class="input-with-icon">
-                                            <input type="password" id="password_confirmation" name="password_confirmation" class="form-control-custom has-eye" placeholder="Re-enter password" required minlength="8">
-                                            <i class="fas fa-lock"></i>
+                                            <input type="password" id="password_confirmation" name="password_confirmation" class="form-control-custom has-eye"  required minlength="8">
                                             <button type="button" class="pw-eye" data-target="password_confirmation" aria-label="Show password">
                                                 <i class="far fa-eye"></i>
                                             </button>
@@ -138,24 +132,22 @@
                             <!-- ── Section 2: Professional Credentials ─── -->
                             <div class="form-section">
                                 <div class="form-section-title">
-                                    <div class="form-section-number">2</div>
+                                     
                                     <div>
                                         <h5>Professional Credentials</h5>
-                                        <small>Your medical qualifications and expertise</small>
                                     </div>
                                 </div>
 
                                 <div class="row g-3">
                                     <div class="col-md-6">
-                                        <label class="form-label-custom" for="qualification">Qualification <span class="required">*</span></label>
+                                        <label class="form-label-custom" for="qualification">Qualification </label>
                                         <div class="input-with-icon">
-                                            <input type="text" id="qualification" name="qualification" class="form-control-custom" placeholder="MBBS, FCPS Dermatology" value="{{ old('qualification') }}" required>
-                                            <i class="fas fa-graduation-cap"></i>
+                                            <input type="text" id="qualification" name="qualification" class="form-control-custom" placeholder="Enter qualification" value="{{ old('qualification') }}" required>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label class="form-label-custom" for="experience_year">Years of Experience <span class="required">*</span></label>
+                                        <label class="form-label-custom" for="experience_year">Years of Experience </label>
                                         <div class="input-with-icon">
                                             <select id="experience_year" name="experience_year" class="form-control-custom" required>
                                                 <option value="" disabled {{ old('experience_year') ? '' : 'selected' }}>Select experience</option>
@@ -166,12 +158,12 @@
                                                 <option value="10-15" {{ old('experience_year') == '10-15' ? 'selected' : '' }}>10 – 15 years</option>
                                                 <option value="15+" {{ old('experience_year') == '15+' ? 'selected' : '' }}>15+ years</option>
                                             </select>
-                                            <i class="fas fa-briefcase-medical"></i>
+                                           
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label class="form-label-custom" for="specialization">Specialization <span class="required">*</span></label>
+                                        <label class="form-label-custom" for="specialization">Specialization </label>
                                         <div class="input-with-icon">
                                             <select id="specialization" name="specialization" class="form-control-custom" required>
                                                 <option value="" disabled {{ old('specialization') ? '' : 'selected' }}>Select specialization</option>
@@ -183,15 +175,15 @@
                                                 <option value="Trichology" {{ old('specialization') == 'Trichology' ? 'selected' : '' }}>Trichology (Hair Disorders)</option>
                                                 <option value="Aesthetic Medicine" {{ old('specialization') == 'Aesthetic Medicine' ? 'selected' : '' }}>Aesthetic Medicine</option>
                                             </select>
-                                            <i class="fas fa-stethoscope"></i>
+                                            
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label class="form-label-custom" for="phone_number">Phone Number <span class="required">*</span></label>
+                                        <label class="form-label-custom" for="phone_number">Phone Number </label>
                                         <div class="input-with-icon">
-                                            <input type="tel" id="phone_number" name="phone_number" class="form-control-custom" placeholder="+92 300 1234567" value="{{ old('phone_number') }}" required>
-                                            <i class="fas fa-phone"></i>
+                                            <input type="tel" id="phone_number" name="phone_number" class="form-control-custom" placeholder="Enter number" value="{{ old('phone_number') }}" required>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -200,24 +192,24 @@
                             <!-- ── Section 3: Practice Information ─── -->
                             <div class="form-section">
                                 <div class="form-section-title">
-                                    <div class="form-section-number">3</div>
+                                   
                                     <div>
-                                        <h5>Practice Information</h5>
+                                        
                                         <small>Where patients can find you</small>
                                     </div>
                                 </div>
 
                                 <div class="row g-3">
                                     <div class="col-md-12">
-                                        <label class="form-label-custom" for="clinic_address">Clinic Address <span class="required">*</span></label>
+                                        <label class="form-label-custom" for="clinic_address">Clinic Address </label>
                                         <div class="input-with-icon">
                                             <input type="text" id="clinic_address" name="clinic_address" class="form-control-custom" placeholder="123 Main Boulevard, Gulberg III" value="{{ old('clinic_address') }}" required>
-                                            <i class="fas fa-location-dot"></i>
+                                            
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
-                                        <label class="form-label-custom" for="city">City <span class="required">*</span></label>
+                                        <label class="form-label-custom" for="city">City </label>
                                         <div class="input-with-icon">
                                             <select id="city" name="city" class="form-control-custom" required>
                                                 <option value="" disabled {{ old('city') ? '' : 'selected' }}>Select your city</option>
@@ -234,12 +226,12 @@
                                                 <option value="Hyderabad" {{ old('city') == 'Hyderabad' ? 'selected' : '' }}>Hyderabad</option>
                                                 <option value="Bahawalpur" {{ old('city') == 'Bahawalpur' ? 'selected' : '' }}>Bahawalpur</option>
                                             </select>
-                                            <i class="fas fa-city"></i>
+                                            
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
-                                        <label class="form-label-custom">Availability Days <span class="required">*</span></label>
+                                        <label class="form-label-custom">Availability Days </label>
                                         <div class="days-selector">
                                             @php
                                                 $days = ['Mon' => 'Monday', 'Tue' => 'Tuesday', 'Wed' => 'Wednesday', 'Thu' => 'Thursday', 'Fri' => 'Friday', 'Sat' => 'Saturday', 'Sun' => 'Sunday'];
@@ -260,7 +252,7 @@
                             <!-- ── Section 4: Profile Photo ─── -->
                             <div class="form-section">
                                 <div class="form-section-title">
-                                    <div class="form-section-number">4</div>
+                                   
                                     <div>
                                         <h5>Profile Photo</h5>
                                         <small>A professional photo helps build patient trust</small>

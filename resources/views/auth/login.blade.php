@@ -581,17 +581,17 @@
                   <p>Enter your credentials to access your account.</p>
                 </div>
 
-                <form action="{{ route('login') }}" method="POST" id="loginForm">
+                <form action="{{ route('login') }}" method="POST" id="loginForm" autocomplete="off">
                     @csrf
                   <label class="login-form-label" for="email">Email Address</label>
                   <div class="login-input-wrapper">
-                    <input type="email" id="email" name="email" class="login-form-input" placeholder="you@example.com" required autocomplete="email">
+                    <input type="email" id="email" name="email" class="login-form-input" placeholder="you@example.com" required autocomplete="new-username">
                     <i class="fas fa-envelope"></i>
                   </div>
 
                   <label class="login-form-label" for="password">Password</label>
                   <div class="login-input-wrapper">
-                    <input type="password" id="password" name="password" class="login-form-input" placeholder="Enter your password" required autocomplete="current-password">
+                    <input type="password" id="password" name="password" class="login-form-input" placeholder="Enter your password" required autocomplete="new-password">
                     <i class="fas fa-lock"></i>
                     <button type="button" class="password-toggle" id="togglePassword" aria-label="Show password">
                       <i class="far fa-eye"></i>

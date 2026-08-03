@@ -130,22 +130,21 @@
                             <!-- ── Section 1: Account Information ─── -->
                             <div class="form-section">
                                 <div class="form-section-title">
-                                    <div class="form-section-number">1</div>
+                                
                                     <div>
                                         <h5>Account Information</h5>
-                                        <small>Your login credentials</small>
+                                        
                                     </div>
                                 </div>
 
                                 <div class="row g-3">
                                     <div class="col-md-12">
-                                        <label class="form-label-custom" for="name">Full Name <span class="required">*</span></label>
+                                        <label class="form-label-custom" for="name">Full Name</label>
                                         <div class="input-with-icon">
                                             <input type="text" id="name" name="name"
                                                    class="form-control-custom @error('name') is-invalid @enderror"
-                                                   placeholder="Ayesha Malik"
+                                                   placeholder="Enter name"
                                                    value="{{ old('name') }}" required>
-                                            <i class="fas fa-user"></i>
                                         </div>
                                         @error('name')
                                         <div class="input-error">
@@ -155,13 +154,12 @@
                                     </div>
 
                                     <div class="col-md-12">
-                                        <label class="form-label-custom" for="email">Email Address <span class="required">*</span></label>
+                                        <label class="form-label-custom" for="email">Email Address</label>
                                         <div class="input-with-icon">
                                             <input type="email" id="email" name="email"
                                                    class="form-control-custom @error('email') is-invalid @enderror"
-                                                   placeholder="you@example.com"
+                                                   placeholder="Enter email"
                                                    value="{{ old('email') }}" required>
-                                            <i class="fas fa-envelope"></i>
                                         </div>
                                         @error('email')
                                         <div class="input-error">
@@ -171,12 +169,11 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label class="form-label-custom" for="password">Password <span class="required">*</span></label>
+                                        <label class="form-label-custom" for="password">Password</label>
                                         <div class="input-with-icon">
                                             <input type="password" id="password" name="password"
                                                    class="form-control-custom has-eye @error('password') is-invalid @enderror"
                                                    placeholder="Create a strong password" required minlength="8">
-                                            <i class="fas fa-lock"></i>
                                             <button type="button" class="pw-eye" data-target="password" aria-label="Show password">
                                                 <i class="far fa-eye"></i>
                                             </button>
@@ -190,12 +187,11 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label class="form-label-custom" for="password_confirmation">Confirm Password <span class="required">*</span></label>
+                                        <label class="form-label-custom" for="password_confirmation">Confirm Password</label>
                                         <div class="input-with-icon">
                                             <input type="password" id="password_confirmation" name="password_confirmation"
                                                    class="form-control-custom has-eye @error('password_confirmation') is-invalid @enderror"
                                                    placeholder="Re-enter password" required minlength="8">
-                                            <i class="fas fa-lock"></i>
                                             <button type="button" class="pw-eye" data-target="password_confirmation" aria-label="Show password">
                                                 <i class="far fa-eye"></i>
                                             </button>
@@ -212,20 +208,20 @@
                             <!-- ── Section 2: Personal Details ─── -->
                             <div class="form-section">
                                 <div class="form-section-title">
-                                    <div class="form-section-number">2</div>
+                                
                                     <div>
                                         <h5>Personal Details</h5>
-                                        <small>Helps us personalise your experience</small>
+                                         
                                     </div>
                                 </div>
 
                                 <div class="row g-3">
                                     <div class="col-md-6">
-                                        <label class="form-label-custom" for="phone_number">Phone Number <span class="required">*</span></label>
+                                        <label class="form-label-custom" for="phone_number">Phone Number </label>
                                         <div class="input-with-icon">
                                             <input type="tel" id="phone_number" name="phone_number"
                                                    class="form-control-custom @error('phone_number') is-invalid @enderror"
-                                                   placeholder="+92 300 1234567"
+                                                   placeholder="Enter phone number"
                                                    value="{{ old('phone_number') }}" required>
                                             <i class="fas fa-phone"></i>
                                         </div>
@@ -237,11 +233,11 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label class="form-label-custom" for="age">Age <span class="required">*</span></label>
+                                        <label class="form-label-custom" for="age">Age  </label>
                                         <div class="input-with-icon">
                                             <input type="number" id="age" name="age"
                                                    class="form-control-custom @error('age') is-invalid @enderror"
-                                                   placeholder="28" min="1" max="120"
+                                                   placeholder="Enter age" min="1" max="120"
                                                    value="{{ old('age') }}" required>
                                             <i class="fas fa-cake-candles"></i>
                                         </div>
@@ -253,7 +249,7 @@
                                     </div>
 
                                     <div class="col-md-12">
-                                        <label class="form-label-custom">Gender <span class="required">*</span></label>
+                                        <label class="form-label-custom">Gender  </label>
                                         <div class="chip-group @error('gender') is-invalid @enderror">
                                             <label class="chip-option">
                                                 <input type="radio" name="gender" value="Male" {{ old('gender') == 'Male' ? 'checked' : '' }} required>
@@ -267,10 +263,7 @@
                                                 <input type="radio" name="gender" value="Other" {{ old('gender') == 'Other' ? 'checked' : '' }}>
                                                 <span><i class="fas fa-genderless"></i> Other</span>
                                             </label>
-                                            <label class="chip-option">
-                                                <input type="radio" name="gender" value="Prefer not to say" {{ old('gender') == 'Prefer not to say' ? 'checked' : '' }}>
-                                                <span><i class="fas fa-user-shield"></i> Prefer not to say</span>
-                                            </label>
+                                             
                                         </div>
                                         @error('gender')
                                         <div class="input-error">
@@ -311,10 +304,10 @@
                             <!-- ── Section 3: Skin Profile ─── -->
                             <div class="form-section">
                                 <div class="form-section-title">
-                                    <div class="form-section-number">3</div>
+                                    
                                     <div>
                                         <h5>Your Skin Profile</h5>
-                                        <small>Helps doctors give you better, faster recommendations</small>
+                                        
                                     </div>
                                 </div>
 
