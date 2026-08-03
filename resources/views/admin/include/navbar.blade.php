@@ -45,13 +45,7 @@
                     href="javascript:void(0);"
                     data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                        @if($user->hasRole('dermatologist'))
-                            @if($user->dermatologist && $user->dermatologist->profile_image)
-                                <img src="{{ asset('storage/' . $user->dermatologist->profile_image) }}" alt="Dermatologist Profile" class="rounded-circle" >
-                            @else
-                                <img src="{{ asset('assets/img/avatars/1.png') }}" alt="Default Avatar" class="rounded-circle" >
-                            @endif
-                       @endif
+                        <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}" class="rounded-circle">
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -60,13 +54,7 @@
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
-                                               @if($user->hasRole('dermatologist'))
-                                                @if($user->dermatologist && $user->dermatologist->profile_image)
-                                                    <img src="{{ asset('storage/' . $user->dermatologist->profile_image) }}" alt="Dermatologist Profile" class="rounded-circle" >
-                                                @else
-                                                    <img src="{{ asset('assets/img/avatars/1.png') }}" alt="Default Avatar" class="rounded-circle" >
-                                                @endif
-                                        @endif
+                                        <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}" class="rounded-circle">
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">

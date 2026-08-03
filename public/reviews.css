@@ -1,0 +1,349 @@
+/* ============================================================
+   REVIEW CARDS
+   ------------------------------------------------------------
+   The design here is driven entirely by the `reviews` table:
+
+     rating        -> star row + numeric score
+     review_text   -> card body
+     name          -> reviewer name + generated initial avatar
+     location      -> meta line
+     created_at    -> meta line
+     patient_id    -> "Verified patient" badge (set = written by a
+                      registered patient, null = added by an admin)
+     status        -> only `approved` rows are queried for display
+
+   Loaded AFTER servicedetail.css in includes/header.blade.php, and
+   namespaced `rv-`, so this file is the single owner of the review
+   card look on every page (home, about, doctor detail).
+   ============================================================ */
+
+/* ── Rating summary (section header) ─────────────────────── */
+.rv-summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 22px;
+    padding: 12px 22px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    box-shadow: 0 10px 30px rgba(21, 101, 192, 0.08);
+}
+
+.rv-summary-score {
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    line-height: 1;
+}
+
+.rv-summary-stars {
+    display: inline-flex;
+    gap: 3px;
+    font-size: 0.9rem;
+}
+
+.rv-summary-divider {
+    width: 1px;
+    height: 26px;
+    background: var(--border);
+}
+
+.rv-summary-count {
+    font-size: 0.84rem;
+    color: var(--text-light);
+    line-height: 1.45;
+}
+
+.rv-summary-count strong {
+    display: block;
+    color: var(--text-mid);
+    font-weight: 600;
+}
+
+/* ── Card ────────────────────────────────────────────────── */
+.rv-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 28px 26px 24px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(21, 101, 192, 0.06);
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+    overflow: hidden;
+}
+
+.rv-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--accent-blue));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.rv-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 55px rgba(21, 101, 192, 0.14);
+    border-color: var(--accent-blue);
+}
+
+.rv-card:hover::before {
+    transform: scaleX(1);
+}
+
+/* Decorative quote glyph */
+.rv-card-quote {
+    position: absolute;
+    top: 14px;
+    right: 22px;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 3.4rem;
+    line-height: 1;
+    color: var(--soft-blue);
+    pointer-events: none;
+    user-select: none;
+}
+
+/* ── Rating row ──────────────────────────────────────────── */
+.rv-rating {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+}
+
+.rv-stars {
+    display: inline-flex;
+    gap: 2px;
+    font-size: 0.86rem;
+    color: #f5b301;
+}
+
+.rv-stars .rv-star-off {
+    color: #dfe6ec;
+}
+
+.rv-score {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--primary);
+    background: var(--soft-blue);
+    padding: 2px 9px;
+    border-radius: 999px;
+    letter-spacing: 0.2px;
+}
+
+/* ── Body ────────────────────────────────────────────────── */
+.rv-text {
+    font-size: 0.93rem;
+    line-height: 1.75;
+    color: var(--text-mid);
+    margin: 0 0 24px;
+    overflow-wrap: anywhere;
+}
+
+/* ── Footer (pinned to the bottom so cards align) ────────── */
+.rv-footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+}
+
+.rv-avatar {
+    flex-shrink: 0;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.92rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(13, 33, 55, 0.18);
+}
+
+.rv-identity {
+    min-width: 0;
+    flex: 1;
+}
+
+.rv-name {
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--text-dark);
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rv-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: var(--text-light);
+    margin-top: 3px;
+}
+
+.rv-meta i {
+    font-size: 0.72rem;
+    color: var(--accent-blue);
+}
+
+.rv-meta-dot {
+    opacity: 0.5;
+}
+
+.rv-verified {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #0b875b;
+    background: #e6f6f1;
+    border: 1px solid #b6e6d4;
+    padding: 4px 9px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+/* ── Featured variant (first card) ───────────────────────── */
+.rv-card--featured {
+    background: linear-gradient(135deg, var(--primary) 0%, #1976d2 100%);
+    border-color: transparent;
+    box-shadow: 0 18px 45px rgba(21, 101, 192, 0.28);
+}
+
+.rv-card--featured::before {
+    background: rgba(255, 255, 255, 0.75);
+}
+
+.rv-card--featured .rv-card-quote {
+    color: rgba(255, 255, 255, 0.22);
+}
+
+.rv-card--featured .rv-text {
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.rv-card--featured .rv-stars {
+    color: #ffd54f;
+}
+
+.rv-card--featured .rv-stars .rv-star-off {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.rv-card--featured .rv-score {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.rv-card--featured .rv-footer {
+    border-top-color: rgba(255, 255, 255, 0.22);
+}
+
+/* Inline colour on the avatar is per-reviewer, so it needs !important here. */
+.rv-card--featured .rv-avatar {
+    background: rgba(255, 255, 255, 0.22) !important;
+    box-shadow: none;
+}
+
+.rv-card--featured .rv-name {
+    color: #fff;
+}
+
+.rv-card--featured .rv-meta {
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.rv-card--featured .rv-meta i {
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.rv-card--featured .rv-verified {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.rv-card--featured:hover {
+    border-color: transparent;
+    box-shadow: 0 26px 60px rgba(21, 101, 192, 0.34);
+}
+
+/* ── Empty state ─────────────────────────────────────────── */
+.rv-empty {
+    text-align: center;
+    padding: 56px 24px;
+    background: var(--white);
+    border: 1px dashed var(--border);
+    border-radius: 20px;
+}
+
+.rv-empty i {
+    font-size: 2.4rem;
+    color: var(--mid-blue);
+    margin-bottom: 14px;
+    display: block;
+}
+
+.rv-empty h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+}
+
+.rv-empty p {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin: 0;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .rv-card {
+        padding: 24px 20px 20px;
+    }
+
+    .rv-card-quote {
+        font-size: 2.8rem;
+    }
+
+    .rv-summary {
+        gap: 10px;
+        padding: 10px 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .rv-footer {
+        flex-wrap: wrap;
+    }
+
+    .rv-verified {
+        margin-left: 58px;
+    }
+}

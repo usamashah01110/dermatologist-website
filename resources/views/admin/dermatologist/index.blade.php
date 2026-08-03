@@ -62,7 +62,7 @@
                                 $doctor->availability_days}}</td>
                                 <td>{{ $doctor->status }}</td>
                         <td>
-                          <img src="{{ asset('storage/' .$doctor->profile_image) }}" alt="Dermatologist-Image" class="rounded-circle" style="width: 50px; height: 50px;">
+                          <img src="{{ $doctor->profile_image_url }}" alt="{{ $doctor->user->name }}" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
                         </td>
                         <td>
                           <div class="dropdown">

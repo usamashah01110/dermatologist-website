@@ -133,56 +133,22 @@
       <span class="section-label">Patient stories</span>
       <h2 class="section-title">Patients love the DermaConnect experience.</h2>
       <p class="section-subtitle mx-auto">Real results, reliable support, and easy access to dermatologists across Pakistan.</p>
+      @include('includes.review-summary', ['reviews' => $reviews])
     </div>
     <div class="row g-4">
-      <div class="col-md-6 col-lg-4">
-        <div class="review-card review-featured">
-          <div class="review-quote">"</div>
-          <div class="review-stars">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-          </div>
-          <p class="review-text">DermaConnect helped me finally manage my acne with a plan that actually fits my lifestyle. The doctor was supportive and responsive every step of the way.</p>
-          <div class="d-flex align-items-center">
-            <img src="https://i.pravatar.cc/100?img=13" alt="Hina" class="reviewer-avatar"/>
-            <div>
-              <div class="reviewer-name">Hina Khan</div>
-              <div class="reviewer-info">Islamabad, ICT</div>
-            </div>
+      @forelse($reviews as $review)
+        <div class="col-md-6 col-lg-4">
+          @include('includes.review-card', ['review' => $review, 'featured' => $loop->first])
+        </div>
+      @empty
+        <div class="col-12">
+          <div class="rv-empty">
+            <i class="fas fa-comment-medical"></i>
+            <h4>No patient stories yet</h4>
+            <p>Approved patient reviews will appear here as soon as they are published.</p>
           </div>
         </div>
-      </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="review-card">
-          <div class="review-quote" style="color:var(--mid-blue)">"</div>
-          <div class="review-stars">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-          </div>
-          <p class="review-text">The consultation was detailed and the follow-up advice has made such a difference. I felt heard and well cared for from start to finish.</p>
-          <div class="d-flex align-items-center">
-            <img src="https://i.pravatar.cc/100?img=24" alt="Bilal" class="reviewer-avatar"/>
-            <div>
-              <div class="reviewer-name">Bilal Ahmed</div>
-              <div class="reviewer-info">Lahore, Punjab</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="review-card">
-          <div class="review-quote" style="color:var(--mid-blue)">"</div>
-          <div class="review-stars">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-          </div>
-          <p class="review-text">My chronic eczema symptoms have improved so much, and the dermatologist explained every treatment clearly. I finally feel confident with my skin again.</p>
-          <div class="d-flex align-items-center">
-            <img src="https://i.pravatar.cc/100?img=36" alt="Sara" class="reviewer-avatar"/>
-            <div>
-              <div class="reviewer-name">Sara Ali</div>
-              <div class="reviewer-info">Karachi, Sindh</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      @endforelse
     </div>
   </div>
 </section>

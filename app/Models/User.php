@@ -6,6 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -50,6 +52,37 @@ class User extends Authenticatable
     public function dermatologist()
     {
         return $this->hasOne(Dermatologist::class);
+    }
+
+    /**
+     * A usable avatar URL for this user, whatever their role.
+     *
+     * Falls back through: their dermatologist profile photo, the avatar copied
+     * from a social login, then the template's default image. Views must not
+     * branch on role for this — doing so is what left superadmin and patient
+     * accounts with an empty avatar box in the admin panel.
+     */
+    public function getAvatarUrlAttribute(): string
+    {
+        $profileImage = $this->dermatologist?->profile_image;
+
+        if ($profileImage && Storage::disk('public')->exists($profileImage)) {
+            return asset('storage/' . $profileImage);
+        }
+
+        if ($this->avatar) {
+            // Social logins (GoogleController) store an absolute URL; anything
+            // else is treated as a path on the public disk.
+            if (Str::startsWith($this->avatar, ['http://', 'https://'])) {
+                return $this->avatar;
+            }
+
+            if (Storage::disk('public')->exists($this->avatar)) {
+                return asset('storage/' . $this->avatar);
+            }
+        }
+
+        return asset('assets/img/avatars/1.png');
     }
 
     public function patient()

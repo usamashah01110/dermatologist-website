@@ -382,7 +382,7 @@
 
                                     <div class="doctor-card-modern">
                                         <div class="doctor-card-header">
-                                            <img src="{{ asset('storage/'.$selectedDoctor->dermatologist->profile_image) }}"
+                                            <img src="{{ $selectedDoctor->dermatologist->profile_image_url }}"
                                                  alt="{{ $selectedDoctor->name }}"
                                                  class="doctor-avatar-modern" />
                                             <div class="doctor-info-modern">

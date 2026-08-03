@@ -30,6 +30,7 @@ use App\Http\Controllers\DashboardController;
 Route::get('/', [MainController::class, 'home'])->name('home.page');
 Route::get('/about', [MainController::class, 'about'])->name('about.page');
 Route::get('/contact', [MainController::class, 'contact'])->name('contact.page');
+Route::post('/contact', [MainController::class, 'sendContact'])->name('contact.send');
 Route::get('/dermatologists', [MainController::class, 'dermatologists'])->name('dermatologists.page');
 Route::get('/booking', [MainController::class, 'booking'])->name('booking.page');
 

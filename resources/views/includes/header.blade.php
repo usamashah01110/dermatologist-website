@@ -14,6 +14,8 @@
   <link href="{{ asset('register.css') }}" rel="stylesheet"/>
   <link href="{{ asset('skincare.css') }}" rel="stylesheet"/>
   <link href="{{ asset('servicedetail.css') }}" rel="stylesheet"/>
+  {{-- Must stay last: it owns the review-card design on every page. --}}
+  <link href="{{ asset('reviews.css') }}" rel="stylesheet"/>
 
         <style>
         .toast-container-custom {

@@ -114,6 +114,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Support Inbox
+    |--------------------------------------------------------------------------
+    |
+    | Where "Contact Us" messages from the website are delivered. This is the
+    | same address shown to visitors on the contact page.
+    |
+    */
+
+    'contact_to' => env('MAIL_CONTACT_TO', 'support@dermaconnect.pk'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Markdown Mail Settings
     |--------------------------------------------------------------------------
     |

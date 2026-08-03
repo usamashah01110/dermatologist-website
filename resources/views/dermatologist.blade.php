@@ -87,7 +87,7 @@
                 >
 
                     <img
-                        src="{{ asset('storage/' . $doctor->profile_image) }}"
+                        src="{{ $doctor->profile_image_url }}"
                         alt="{{ $doctor->user->name }}"
                         class="doctor-avatar"
                     />

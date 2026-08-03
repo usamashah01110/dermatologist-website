@@ -243,7 +243,7 @@
             <div class="doc-hero-card">
                 {{-- Left: photo --}}
                 <div class="doc-hero-photo">
-                    <img src="{{ asset('storage/' . $doctor->profile_image) }}" alt="{{ $doctor->user->name }}">
+                    <img src="{{ $doctor->profile_image_url }}" alt="{{ $doctor->user->name }}">
                     <span class="doc-hero-photo-name">{{ \Illuminate\Support\Str::of($doctor->user->name)->explode(' ')->first() }}</span>
                 </div>
 
@@ -466,22 +466,8 @@
                     Real experiences from real patients who trusted {{ $doctor->user->name }} with their skin health journey.
                 </p>
 
-                {{-- ⭐ Average rating summary --}}
-                @if(isset($reviews) && $reviews->count() > 0)
-                    @php
-                        $avgRating = $reviews->avg('rating') ?? 5;
-                        $totalReviews = $reviews->count();
-                    @endphp
-                    <div class="doctor-rating-summary">
-                        <div class="rating-stars">
-                            @for($i = 1; $i <= 5; $i++)
-                                <i class="fas fa-star {{ $i <= round($avgRating) ? 'active' : '' }}"></i>
-                            @endfor
-                        </div>
-                        <span class="rating-value">{{ number_format($avgRating, 1) }}</span>
-                        <span class="rating-count">({{ $totalReviews }} {{ $totalReviews == 1 ? 'review' : 'reviews' }})</span>
-                    </div>
-                @endif
+                {{-- Average rating, computed from this doctor's approved reviews --}}
+                @include('includes.review-summary', ['reviews' => $userReview])
             </div>
 
             {{-- ===== ⭐ WRITE A REVIEW BUTTON / FORM ===== --}}
@@ -583,49 +569,21 @@
             @endauth
 
             {{-- ===== EXISTING REVIEWS DISPLAY ===== --}}
-            @if(isset($userReview) && $userReview->count() > 0)
-                <div class="row g-4">
-                    @foreach($userReview as $review)
-                        <div class="col-md-6 col-lg-4">
-                            <div class="review-card">
-                                <div class="review-quote-icon">
-                                    <i class="fas fa-quote-left"></i>
-                                </div>
-
-                                <div class="review-rating">
-                                    @for($i = 1; $i <= 5; $i++)
-                                        <i class="fas fa-star {{ $i <= ($review->rating ?? 5) ? '' : 'inactive' }}"></i>
-                                    @endfor
-                                </div>
-
-                                <p class="review-text">{{ $review->review_text }}</p>
-
-                                <div class="reviewer-info">
-                                    <img src="{{ $review->image_path ? asset('storage/' . $review->image_path) : 'https://ui-avatars.com/api/?name=' . urlencode($review->name) . '&background=1565C0&color=fff' }}"
-                                         alt="{{ $review->name }}"
-                                         class="reviewer-image"
-                                         onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($review->name) }}&background=1565C0&color=fff'" />
-                                    <div>
-                                        <h5 class="reviewer-name">{{ $review->name }}</h5>
-                                        <span class="reviewer-location">
-                                            <i class="fas fa-map-marker-alt"></i> {{ $review->location }}
-                                        </span>
-                                    </div>
-                                    <div class="verified-badge" title="Verified Patient">
-                                        <i class="fas fa-check"></i>
-                                    </div>
-                                </div>
-                            </div>
+            <div class="row g-4">
+                @forelse($userReview as $review)
+                    <div class="col-md-6 col-lg-4">
+                        @include('includes.review-card', ['review' => $review, 'featured' => $loop->first])
+                    </div>
+                @empty
+                    <div class="col-12">
+                        <div class="rv-empty">
+                            <i class="fas fa-comment-medical"></i>
+                            <h4>No Reviews Yet</h4>
+                            <p>Be the first patient to share your experience with {{ $doctor->user->name }} after your consultation.</p>
                         </div>
-                    @endforeach
-                </div>
-            @else
-                <div class="no-reviews">
-                    <i class="fas fa-comment-medical"></i>
-                    <h4>No Reviews Yet</h4>
-                    <p>Be the first patient to share your experience with {{ $doctor->user->name }} after your consultation.</p>
-                </div>
-            @endif
+                    </div>
+                @endforelse
+            </div>
         </div>
     </section>
 

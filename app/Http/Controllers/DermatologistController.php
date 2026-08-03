@@ -112,7 +112,13 @@ class DermatologistController extends Controller
     public function detailDermatologist($id)
     {
         $doctor = Dermatologist::with('user')->where('status', 'approved')->where('id', $id)->first();
-        $userReview = Review::where('dermatologist_id', $id)->get();
+
+        // Published reviews for this doctor, newest first.
+        $userReview = Review::approved()
+            ->where('dermatologist_id', $id)
+            ->latest()
+            ->get();
+
         return view('dermatologistdetailpage', compact('doctor','userReview'));
 
     }

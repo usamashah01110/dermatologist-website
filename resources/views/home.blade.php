@@ -128,35 +128,23 @@
       <span class="section-label">Patient Stories</span>
       <h2 class="section-title">What Our Patients Say</h2>
       <p class="section-subtitle mx-auto">Real experiences from real patients who found the right care on DermaConnect.</p>
+      @include('includes.review-summary', ['reviews' => $reviews])
     </div>
 
     <div class="row g-4">
-@foreach($reviews as $review)
-      <div class="col-md-6 col-lg-4">
-        <div class="review-card review-featured">
-          <div class="review-quote">"</div>
-          <div class="review-stars">
-            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-          </div>
-          <p class="review-text">{{ $review->review_text }}</p>
-          <div class="d-flex align-items-center gap-3">
-            <div class="reviewer-image">
-              @if($review->image_path)
-                <img src="{{ asset('storage/' . $review->image_path) }}" alt="Patient Image" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;" />
-              @else
-                <div class="bg-light rounded-circle shadow-sm" style="width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
-                  <small class="text-muted">No Image</small>
-                </div>
-              @endif
-            </div>
-            <div>
-              <div class="reviewer-name">{{ $review->name }}</div>
-              <div class="reviewer-info">{{ $review->location }}</div>
-            </div>
+      @forelse($reviews as $review)
+        <div class="col-md-6 col-lg-4">
+          @include('includes.review-card', ['review' => $review, 'featured' => $loop->first])
+        </div>
+      @empty
+        <div class="col-12">
+          <div class="rv-empty">
+            <i class="fas fa-comment-medical"></i>
+            <h4>No patient stories yet</h4>
+            <p>Reviews from patients will appear here once they share their experience.</p>
           </div>
         </div>
-      </div>
-@endforeach
+      @endforelse
     </div>
   </div>
 </section>
