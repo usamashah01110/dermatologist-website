@@ -25,6 +25,7 @@
                 <thead class="table-dark">
                     <tr>
                         <th>#</th>
+                        <th>Photo</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
@@ -38,6 +39,10 @@
                     @forelse($patients as $patient)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
+                            <td>
+                                <img src="{{ $patient->profile_image_url }}" alt="{{ optional($patient->user)->name ?? 'Patient' }}"
+                                     class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
+                            </td>
                             <td><strong>{{ optional($patient->user)->name ?? '—' }}</strong></td>
                             <td>{{ optional($patient->user)->email ?? '—' }}</td>
                             <td>{{ $patient->phone_number }}</td>
@@ -48,7 +53,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="text-center text-muted py-4">No patients found.</td>
+                            <td colspan="9" class="text-center text-muted py-4">No patients found.</td>
                         </tr>
                     @endforelse
                 </tbody>

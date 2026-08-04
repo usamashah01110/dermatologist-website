@@ -98,12 +98,21 @@ class AdminProfileController extends Controller
         // Patient-specific fields.
         if ($user->hasRole('patient') && $user->patient) {
             $data = $request->validate([
-                'phone_number' => ['nullable', 'string', 'max:20'],
-                'age'          => ['nullable', 'integer', 'min:1', 'max:120'],
-                'gender'       => ['nullable', 'in:Male,Female,Other,Prefer not to say'],
-                'address'      => ['nullable', 'string', 'max:1000'],
-                'skin_type'    => ['nullable', 'in:Normal,Oily,Dry,Combination,Sensitive,Not sure'],
+                'phone_number'  => ['nullable', 'string', 'max:20'],
+                'age'           => ['nullable', 'integer', 'min:1', 'max:120'],
+                'gender'        => ['nullable', 'in:Male,Female,Other,Prefer not to say'],
+                'address'       => ['nullable', 'string', 'max:1000'],
+                'skin_type'     => ['nullable', 'in:Normal,Oily,Dry,Combination,Sensitive,Not sure'],
+                'profile_image' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:2048'],
             ]);
+
+            // Only overwrite the stored path when a new file actually arrived,
+            // otherwise saving the form would wipe the existing photo.
+            unset($data['profile_image']);
+
+            if ($request->hasFile('profile_image')) {
+                $data['profile_image'] = $request->file('profile_image')->store('patients', 'public');
+            }
 
             $user->patient->update($data);
         }

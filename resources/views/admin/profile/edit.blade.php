@@ -216,6 +216,17 @@
                                     <label class="form-label">Address</label>
                                     <textarea name="address" class="form-control" rows="2">{{ old('address', $user->patient->address) }}</textarea>
                                 </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Profile Photo <span class="text-muted">(optional)</span></label>
+                                    <input type="file" name="profile_image" class="form-control" accept="image/png,image/jpeg,image/jpg">
+                                    <small class="text-muted">PNG or JPG, max 2MB.</small>
+                                </div>
+                                @if($user->patient->profile_image)
+                                    <div class="col-md-6">
+                                        <label class="form-label d-block">Current Photo</label>
+                                        <img src="{{ $user->patient->profile_image_url }}" alt="profile" class="rounded" style="width:64px;height:64px;object-fit:cover;">
+                                    </div>
+                                @endif
                             </div>
                         @endif
 

@@ -57,14 +57,16 @@ class User extends Authenticatable
     /**
      * A usable avatar URL for this user, whatever their role.
      *
-     * Falls back through: their dermatologist profile photo, the avatar copied
+     * Falls back through: the photo on their role profile (dermatologist or
+     * patient — a user only ever holds one of the two), then the avatar copied
      * from a social login, then the template's default image. Views must not
      * branch on role for this — doing so is what left superadmin and patient
      * accounts with an empty avatar box in the admin panel.
      */
     public function getAvatarUrlAttribute(): string
     {
-        $profileImage = $this->dermatologist?->profile_image;
+        $profileImage = $this->dermatologist?->profile_image
+            ?? $this->patient?->profile_image;
 
         if ($profileImage && Storage::disk('public')->exists($profileImage)) {
             return asset('storage/' . $profileImage);
